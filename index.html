@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Мобильный масштаб: лендинг проектируется в первую очередь под телефоны -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Александр & Мария — Свадебное приглашение</title>
+
+  <!-- Подключаем шрифты Google Fonts: декоративный для заголовков + чистый sans для текста -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&family=Great+Vibes&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* ============================================================
+       ПЕРЕМЕННЫЕ ТЕМЫ
+       Меняя эти значения, можно быстро перекрасить весь сайт.
+       ============================================================ */
+    :root {
+      --green-deep:  #5a7a5e;   /* основной зелёный (акценты, кнопки) */
+      --green-soft:  #88a98b;   /* мягкий зелёный */
+      --green-mist:  #eaf1ea;   /* очень светлый зелёный фон */
+      --green-line:  #cdddce;   /* линии/границы */
+      --cream:       #fbfdfb;   /* почти белый фон */
+      --white:       #ffffff;
+      --ink:         #34403a;   /* основной цвет текста */
+      --ink-soft:    #6c7a70;   /* приглушённый текст */
+      --shadow:      0 18px 50px rgba(90, 122, 94, 0.12);
+      --shadow-soft: 0 10px 30px rgba(90, 122, 94, 0.08);
+      --radius:      28px;
+      --radius-sm:   18px;
+    }
+
+    /* ============================================================
+       БАЗОВЫЕ СТИЛИ
+       ============================================================ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; } /* плавный скролл по якорям */
+
+    body {
+      font-family: 'Jost', sans-serif;
+      color: var(--ink);
+      background: var(--cream);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 500;
+      line-height: 1.15;
+      letter-spacing: 0.5px;
+    }
+
+    p { font-weight: 300; }
+
+    /* Контейнер: узкий, чтобы держать «мобильную» ширину даже на десктопе */
+    .wrap {
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 0 22px;
+    }
+
+    section { padding: 64px 0; }
+
+    /* Заголовок секции с маленькой подписью сверху */
+    .section-tag {
+      font-family: 'Jost', sans-serif;
+      font-weight: 400;
+      font-size: 12px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--green-soft);
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: 34px;
+      text-align: center;
+      color: var(--ink);
+      margin-bottom: 34px;
+    }
+
+    /* Декоративный разделитель «листик» */
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: var(--green-soft);
+      margin: 0 auto 34px;
+    }
+    .divider::before,
+    .divider::after {
+      content: "";
+      height: 1px;
+      width: 46px;
+      background: var(--green-line);
+    }
+
+    /* ============================================================
+       КАРТОЧКИ
+       ============================================================ */
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-soft);
+      padding: 32px 26px;
+      border: 1px solid rgba(205, 221, 206, 0.5);
+    }
+
+    /* ============================================================
+       КНОПКИ
+       ============================================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: 'Jost', sans-serif;
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      padding: 15px 30px;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--green-deep);
+      color: #fff;
+      box-shadow: 0 10px 24px rgba(90, 122, 94, 0.28);
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 16px 30px rgba(90, 122, 94, 0.34); }
+    .btn-outline {
+      background: transparent;
+      color: var(--green-deep);
+      border: 1.5px solid var(--green-line);
+    }
+    .btn-outline:hover { transform: translateY(-3px); background: var(--green-mist); }
+    .btn-block { width: 100%; }
+
+    /* ============================================================
+       1. ПЕРВЫЙ ЭКРАН (HERO)
+       ============================================================ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 22px 60px;
+      background:
+        radial-gradient(circle at 50% 0%, var(--green-mist), transparent 60%),
+        linear-gradient(180deg, #f3f8f3 0%, var(--cream) 100%);
+      overflow: hidden;
+    }
+
+    /* Декоративные «акварельные» пятна-листья на фоне */
+    .hero-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(8px);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    .hero-blob.b1 { width: 240px; height: 240px; top: -60px; left: -70px;
+      background: radial-gradient(circle, #cfe3d0, transparent 70%); }
+    .hero-blob.b2 { width: 300px; height: 300px; bottom: -90px; right: -90px;
+      background: radial-gradient(circle, #dce9dc, transparent 70%); }
+
+    /* Тонкая декоративная веточка (SVG) сверху */
+    .hero-sprig { color: var(--green-soft); margin-bottom: 18px; }
+
+    .hero h1 {
+      font-size: 52px;
+      color: var(--green-deep);
+      margin-bottom: 6px;
+    }
+    .hero .amp { font-style: italic; color: var(--green-soft); }
+    .hero-sub {
+      font-family: 'Great Vibes', cursive;
+      font-size: 30px;
+      color: var(--green-soft);
+      margin-bottom: 20px;
+    }
+    .hero-date {
+      font-family: 'Jost', sans-serif;
+      font-size: 13px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 34px;
+    }
+
+    /* Таймер обратного отсчёта */
+    .countdown {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 36px;
+    }
+    .cd-cell {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(4px);
+      border: 1px solid var(--green-line);
+      border-radius: var(--radius-sm);
+      padding: 14px 6px;
+      min-width: 68px;
+      box-shadow: var(--shadow-soft);
+    }
+    .cd-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 34px;
+      font-weight: 600;
+      color: var(--green-deep);
+      line-height: 1;
+    }
+    .cd-label {
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-top: 6px;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--green-soft);
+      font-size: 22px;
+      animation: bob 1.8s ease-in-out infinite;
+    }
+    @keyframes bob { 0%,100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 8px); } }
+
+    /* ============================================================
+       2. ТЕКСТ ПРИГЛАШЕНИЯ
+       ============================================================ */
+    .invite-card { text-align: center; }
+    .invite-card .lead {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-style: italic;
+      color: var(--green-deep);
+      margin-bottom: 16px;
+    }
+    .invite-card p { color: var(--ink-soft); font-size: 16px; }
+
+    /* ============================================================
+       3. ПРОГРАММА ДНЯ — вертикальный таймлайн
+       ============================================================ */
+    .timeline { position: relative; padding-left: 38px; }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 11px; top: 6px; bottom: 6px;
+      width: 2px;
+      background: var(--green-line);
+    }
+    .tl-item { position: relative; padding-bottom: 28px; }
+    .tl-item:last-child { padding-bottom: 0; }
+    .tl-item::before {
+      content: "";
+      position: absolute;
+      left: -32px; top: 4px;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 3px solid var(--green-soft);
+      box-shadow: 0 0 0 4px var(--green-mist);
+    }
+    .tl-time {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--green-deep);
+    }
+    .tl-text { color: var(--ink-soft); font-size: 15px; }
+
+    /* ============================================================
+       4. МЕНЮ
+       ============================================================ */
+    .menu-grid { display: grid; gap: 16px; }
+    .menu-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 18px 20px;
+      background: var(--green-mist);
+      border-radius: var(--radius-sm);
+    }
+    .menu-ico { font-size: 26px; line-height: 1; }
+    .menu-item h3 { font-size: 21px; color: var(--ink); }
+    .menu-item p { font-size: 14px; color: var(--ink-soft); }
+
+    /* ============================================================
+       5. ПОДАРКИ / 6. ПРИМЕЧАНИЯ — общие мягкие блоки
+       ============================================================ */
+    .soft-card { text-align: center; }
+    .soft-card .ico-round {
+      width: 64px; height: 64px;
+      margin: 0 auto 18px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      background: var(--green-mist);
+      font-size: 28px;
+    }
+    .soft-card p { color: var(--ink-soft); font-size: 16px; }
+
+    .notes-list { list-style: none; display: grid; gap: 14px; }
+    .note-row {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 16px 18px;
+      border: 1px solid var(--green-line);
+      border-radius: var(--radius-sm);
+      background: var(--white);
+    }
+    .note-row .dot { color: var(--green-soft); font-size: 18px; margin-top: 2px; }
+    .note-row b { font-weight: 500; color: var(--ink); }
+    .note-row span { color: var(--ink-soft); font-size: 15px; }
+
+    .important {
+      margin-top: 18px;
+      padding: 18px 20px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, #f0f6f0, #e6f0e6);
+      text-align: center;
+      color: var(--green-deep);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 19px;
+      font-style: italic;
+    }
+
+    /* ============================================================
+       7. RSVP + 8. МЕСТО
+       ============================================================ */
+    .rsvp-card { text-align: center; }
+    .date-badge {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 14px 28px;
+      border-radius: var(--radius-sm);
+      background: var(--green-deep);
+      color: #fff;
+      margin-bottom: 22px;
+    }
+    .date-badge .d-day { font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 600; line-height: 1; }
+    .date-badge .d-mon { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; margin-top: 4px; opacity: 0.9; }
+    .btn-row { display: flex; flex-direction: column; gap: 12px; margin-top: 6px; }
+
+    /* Карта-блок (декоративная) */
+    .map-card { padding: 0; overflow: hidden; }
+    .map-visual {
+      position: relative;
+      height: 180px;
+      background:
+        linear-gradient(135deg, #dcebdd 0%, #cfe3d0 100%),
+        var(--green-mist);
+      background-blend-mode: normal;
+    }
+    /* Имитация дорог на декоративной карте */
+    .map-visual::before,
+    .map-visual::after {
+      content: "";
+      position: absolute;
+      background: rgba(255,255,255,0.7);
+    }
+    .map-visual::before { width: 140%; height: 14px; top: 40%; left: -20%; transform: rotate(-12deg); }
+    .map-visual::after  { width: 14px; height: 140%; left: 60%; top: -20%; transform: rotate(8deg); }
+    .map-pin {
+      position: absolute;
+      top: 42%; left: 50%;
+      transform: translate(-50%, -100%);
+      font-size: 38px;
+      filter: drop-shadow(0 6px 8px rgba(0,0,0,0.15));
+      animation: bob 2s ease-in-out infinite;
+    }
+    .map-info { padding: 24px 26px; text-align: center; }
+    .map-info h3 { font-size: 24px; color: var(--ink); margin-bottom: 4px; }
+    .map-info p { color: var(--ink-soft); font-size: 15px; margin-bottom: 18px; }
+
+    /* ============================================================
+       9. ФОТО ПОСЛЕ СВАДЬБЫ
+       ============================================================ */
+    .photo-card { text-align: center; }
+    .photo-card p { color: var(--ink-soft); font-size: 16px; margin-bottom: 20px; }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .gallery:empty { display: none; }
+    .gallery img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 14px;
+      box-shadow: var(--shadow-soft);
+      animation: fadeScale 0.5s ease both;
+    }
+    @keyframes fadeScale { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+
+    /* ============================================================
+       10. ФИНАЛЬНЫЙ БЛОК
+       ============================================================ */
+    .final {
+      text-align: center;
+      padding: 80px 22px 90px;
+      background: radial-gradient(circle at 50% 100%, var(--green-mist), transparent 65%);
+    }
+    .final .sign {
+      font-family: 'Great Vibes', cursive;
+      font-size: 50px;
+      color: var(--green-deep);
+      line-height: 1.2;
+    }
+    .final .with-love {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 20px;
+      color: var(--ink-soft);
+      margin-bottom: 6px;
+    }
+    .final .heart { color: var(--green-soft); font-size: 22px; margin-top: 14px; }
+
+    /* ============================================================
+       ПЛАВАЮЩАЯ КНОПКА МУЗЫКИ
+       ============================================================ */
+    .music-btn {
+      position: fixed;
+      top: 16px; right: 16px;
+      z-index: 50;
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--green-line);
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(6px);
+      box-shadow: var(--shadow-soft);
+      cursor: pointer;
+      font-size: 20px;
+      display: grid; place-items: center;
+      transition: transform 0.25s ease;
+    }
+    .music-btn:hover { transform: scale(1.08); }
+    .music-btn.playing { background: var(--green-deep); border-color: var(--green-deep); }
+    /* Анимация «вращения» ноты, когда музыка включена */
+    .music-btn.playing .note { animation: spin 3s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Всплывающая подпись состояния музыки */
+    .music-toast {
+      position: fixed;
+      top: 74px; right: 16px;
+      z-index: 50;
+      background: var(--ink);
+      color: #fff;
+      font-size: 13px;
+      padding: 8px 14px;
+      border-radius: 100px;
+      opacity: 0;
+      transform: translateY(-6px);
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .music-toast.show { opacity: 0.95; transform: translateY(0); }
+
+    /* ============================================================
+       МОДАЛЬНОЕ ОКНО RSVP
+       ============================================================ */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(52, 64, 58, 0.5);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      padding: 0;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .modal {
+      background: var(--white);
+      width: 100%;
+      max-width: 480px;
+      border-radius: 28px 28px 0 0;
+      padding: 30px 26px calc(30px + env(safe-area-inset-bottom));
+      transform: translateY(40px);
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      max-height: 92vh;
+      overflow-y: auto;
+    }
+    .modal-overlay.open .modal { transform: translateY(0); }
+
+    .modal h3 { font-size: 28px; text-align: center; color: var(--green-deep); margin-bottom: 4px; }
+    .modal .modal-sub { text-align: center; color: var(--ink-soft); font-size: 14px; margin-bottom: 24px; }
+
+    .field { margin-bottom: 16px; }
+    .field label {
+      display: block;
+      font-size: 13px;
+      color: var(--ink-soft);
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
+    .field input,
+    .field textarea {
+      width: 100%;
+      font-family: 'Jost', sans-serif;
+      font-size: 15px;
+      color: var(--ink);
+      padding: 13px 16px;
+      border: 1.5px solid var(--green-line);
+      border-radius: 14px;
+      background: var(--cream);
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .field input:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--green-soft);
+      background: #fff;
+    }
+    .field textarea { resize: vertical; min-height: 70px; }
+
+    .modal-close {
+      position: absolute;
+      top: 14px; right: 18px;
+      background: none; border: none;
+      font-size: 26px;
+      color: var(--ink-soft);
+      cursor: pointer;
+      line-height: 1;
+    }
+    .modal-inner { position: relative; }
+
+    /* Экран благодарности после отправки */
+    .thanks { text-align: center; padding: 20px 0; display: none; }
+    .thanks.show { display: block; animation: fadeScale 0.5s ease both; }
+    .thanks .big { font-size: 60px; margin-bottom: 12px; }
+    .thanks h3 { font-size: 30px; color: var(--green-deep); margin-bottom: 8px; }
+    .thanks p { color: var(--ink-soft); font-size: 15px; }
+
+    /* ============================================================
+       АНИМАЦИЯ ПОЯВЛЕНИЯ БЛОКОВ ПРИ СКРОЛЛЕ
+       ============================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(34px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Уважение к настройке «уменьшить движение» */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* ============================================================
+       ДЕСКТОП: аккуратная подача «телефона» по центру
+       ============================================================ */
+    @media (min-width: 700px) {
+      body {
+        background:
+          radial-gradient(circle at 50% 0%, #eef4ee, transparent 50%),
+          var(--cream);
+      }
+      .hero h1 { font-size: 64px; }
+      .section-title { font-size: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Кнопка музыки (имитация, без реального аудио) -->
+  <button class="music-btn" id="musicBtn" aria-label="Включить музыку">
+    <span class="note">♪</span>
+  </button>
+  <div class="music-toast" id="musicToast">Музыка включена</div>
+
+  <!-- ============================================================
+       1. ПЕРВЫЙ ЭКРАН
+       ============================================================ -->
+  <header class="hero">
+    <div class="hero-blob b1"></div>
+    <div class="hero-blob b2"></div>
+
+    <!-- Декоративная веточка -->
+    <svg class="hero-sprig" width="60" height="34" viewBox="0 0 60 34" fill="none">
+      <path d="M30 32 C30 20 30 12 30 2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+      <path d="M30 12 C22 10 16 6 12 0 M30 12 C38 10 44 6 48 0" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+      <path d="M30 20 C24 19 19 16 15 11 M30 20 C36 19 41 16 45 11" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+      <circle cx="30" cy="3" r="2.4" fill="currentColor"/>
+    </svg>
+
+    <h1>Александр <span class="amp">&amp;</span> Мария</h1>
+    <div class="hero-sub">Мы женимся!</div>
+    <div class="hero-date">24 августа 2026</div>
+
+    <!-- Таймер обратного отсчёта -->
+    <div class="countdown" id="countdown" aria-label="Обратный отсчёт до свадьбы">
+      <div class="cd-cell"><div class="cd-num" id="cd-days">0</div><div class="cd-label">дней</div></div>
+      <div class="cd-cell"><div class="cd-num" id="cd-hours">0</div><div class="cd-label">часов</div></div>
+      <div class="cd-cell"><div class="cd-num" id="cd-mins">0</div><div class="cd-label">минут</div></div>
+      <div class="cd-cell"><div class="cd-num" id="cd-secs">0</div><div class="cd-label">секунд</div></div>
+    </div>
+
+    <button class="btn btn-primary" data-open-rsvp>Подтвердить присутствие</button>
+
+    <div class="scroll-hint">⌄</div>
+  </header>
+
+  <!-- ============================================================
+       2. ТЕКСТ ПРИГЛАШЕНИЯ
+       ============================================================ -->
+  <section>
+    <div class="wrap reveal">
+      <div class="card invite-card">
+        <div class="divider">❧</div>
+        <p class="lead">Дорогие родные и друзья!</p>
+        <p>
+          Мы будем счастливы разделить с вами один из самых важных дней
+          в нашей жизни. В этот тёплый летний день мы соединим наши сердца
+          и хотим, чтобы рядом были самые близкие люди. Будем рады видеть
+          вас на нашем празднике любви.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       3. ПРОГРАММА ДНЯ
+       ============================================================ -->
+  <section>
+    <div class="wrap reveal">
+      <div class="section-tag">расписание</div>
+      <h2 class="section-title">Программа дня</h2>
+      <div class="card">
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-time">15:00</div><div class="tl-text">Сбор гостей</div></div>
+          <div class="tl-item"><div class="tl-time">16:00</div><div class="tl-text">Церемония</div></div>
+          <div class="tl-item"><div class="tl-time">17:00</div><div class="tl-text">Фотосессия</div></div>
+          <div class="tl-item"><div class="tl-time">18:00</div><div class="tl-text">Банкет</div></div>
+          <div class="tl-item"><div class="tl-time">22:00</div><div class="tl-text">Свадебный торт</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       4. МЕНЮ
+       ============================================================ -->
+  <section>
+    <div class="wrap reveal">
+      <div class="section-tag">угощения</div>
+      <h2 class="section-title">Меню</h2>
+      <div class="menu-grid">
+        <div class="menu-item">
+          <span class="menu-ico">🥗</span>
+          <div><h3>Холодные закуски</h3><p>Сезонные овощи, сыры, лёгкие канапе</p></div>
+        </div>
+        <div class="menu-item">
+          <span class="menu-ico">🍽️</span>
+          <div><h3>Горячие блюда</h3><p>Запечённое мясо, рыба и вегетарианские варианты</p></div>
+        </div>
+        <div class="menu-item">
+          <span class="menu-ico">🍰</span>
+          <div><h3>Десерты</h3><p>Свадебный торт, пирожные и свежие ягоды</p></div>
+        </div>
+        <div class="menu-item">
+          <span class="menu-ico">🥂</span>
+          <div><h3>Напитки</h3><p>Игристое, вино, лимонады и горячие напитки</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       5. ПОДАРКИ
+       ============================================================ -->
+  <section>
+    <div class="wrap reveal">
+      <div class="card soft-card">
+        <div class="ico-round">🎁</div>
+        <h2 class="section-title" style="margin-bottom:14px;">Подарки</h2>
+        <p>
+          Ваше присутствие — лучший подарок для нас. Если вы хотите сделать
+          нам приятное, будем благодарны за вклад в нашу семейную мечту.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       6. ПРИМЕЧАНИЯ ДЛЯ ГОСТЕЙ
+       ============================================================ -->
+  <section>
+    <div class="wrap reveal">
+      <div class="section-tag">детали</div>
+      <h2 class="section-title">Гостям на заметку</h2>
+      <ul class="notes-list">
+        <li class="note-row">
+          <span class="dot">✿</span>
+          <span><b>Дресс-код:</b> светлые и пастельные оттенки, чтобы фотографии получились нежными.</span>
+        </li>
+        <li class="note-row">
+          <span class="dot">✿</span>
+          <span><b>Подтверждение:</b> пожалуйста, сообщите о своём присутствии до <b>1 августа</b>.</span>
+        </li>
+      </ul>
+      <div class="important">Важно: церемония начнётся вовремя — приезжайте чуть заранее ♡</div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       7. ПОДТВЕРЖДЕНИЕ ПРИСУТСТВИЯ (RSVP)
+       ============================================================ -->
+  <section>
+    <div class="wrap reveal">
+      <div class="card rsvp-card">
+        <div class="section-tag">ждём вас</div>
+        <div class="date-badge">
+          <span class="d-day">24</span>
+          <span class="d-mon">августа 2026</span>
+        </div>
+        <h2 class="section-title" style="margin-bottom:20px;">Будете с нами?</h2>
+        <div class="btn-row">
+          <button class="btn btn-outline btn-block" id="addCalendar">📅 Добавить в календарь</button>
+          <button class="btn btn-primary btn-block" data-open-rsvp>✓ Я приду</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       8. МЕСТО ПРОВЕДЕНИЯ
+       ============================================================ -->
+  <section>
+    <div class="wrap reveal">
+      <div class="section-tag">локация</div>
+      <h2 class="section-title">Место проведения</h2>
+      <div class="card map-card">
+        <div class="map-visual"><div class="map-pin">📍</div></div>
+        <div class="map-info">
+          <h3>Загородный ресторан «Green Hall»</h3>
+          <p>г. Москва, Зелёная улица, 15</p>
+          <button class="btn btn-primary btn-block" id="routeBtn">🧭 Построить маршрут</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       9. ФОТО ПОСЛЕ СВАДЬБЫ
+       ============================================================ -->
+  <section>
+    <div class="wrap reveal">
+      <div class="section-tag">воспоминания</div>
+      <h2 class="section-title">Фото с праздника</h2>
+      <div class="card photo-card">
+        <p>После свадьбы здесь появятся фотографии с праздника.<br>А пока вы можете добавить свои кадры 💚</p>
+        <!-- Скрытый input + кнопка-обёртка для демонстрационной загрузки -->
+        <input type="file" id="photoInput" accept="image/*" multiple hidden />
+        <button class="btn btn-outline" id="uploadBtn">⬆ Загрузить фото</button>
+        <div class="gallery" id="gallery"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       10. ФИНАЛЬНЫЙ БЛОК
+       ============================================================ -->
+  <footer class="final reveal">
+    <div class="divider">❧</div>
+    <p class="with-love">С любовью,</p>
+    <div class="sign">Александр и Мария</div>
+    <div class="heart">♡</div>
+  </footer>
+
+  <!-- ============================================================
+       МОДАЛЬНОЕ ОКНО RSVP
+       ============================================================ -->
+  <div class="modal-overlay" id="rsvpModal">
+    <div class="modal">
+      <div class="modal-inner">
+        <button class="modal-close" id="modalClose" aria-label="Закрыть">×</button>
+
+        <!-- Форма -->
+        <form id="rsvpForm">
+          <h3>Подтверждение</h3>
+          <p class="modal-sub">Заполните, пожалуйста, короткую форму</p>
+
+          <div class="field">
+            <label for="f-name">ФИО</label>
+            <input type="text" id="f-name" name="name" placeholder="Иван Иванов" required />
+          </div>
+          <div class="field">
+            <label for="f-phone">Номер телефона</label>
+            <input type="tel" id="f-phone" name="phone" placeholder="+7 (___) ___-__-__" required />
+          </div>
+          <div class="field">
+            <label for="f-guests">Количество гостей</label>
+            <input type="number" id="f-guests" name="guests" min="1" max="10" value="1" required />
+          </div>
+          <div class="field">
+            <label for="f-comment">Комментарий</label>
+            <textarea id="f-comment" name="comment" placeholder="Пожелания, аллергии, вопросы…"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">Отправить</button>
+        </form>
+
+        <!-- Экран благодарности -->
+        <div class="thanks" id="thanks">
+          <div class="big">💚</div>
+          <h3>Спасибо!</h3>
+          <p>Ваш ответ сохранён.<br>Мы очень ждём встречи с вами.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ============================================================
+       НАСТРОЙКИ — меняйте здесь дату и адрес
+       ============================================================ */
+    const WEDDING_DATE = new Date('2026-08-24T16:00:00'); // дата и время церемонии
+    const VENUE_ADDRESS = 'г. Москва, Зелёная улица, 15'; // адрес для маршрута
+
+    /* ============================================================
+       1. ТАЙМЕР ОБРАТНОГО ОТСЧЁТА
+       ============================================================ */
+    const cd = {
+      days:  document.getElementById('cd-days'),
+      hours: document.getElementById('cd-hours'),
+      mins:  document.getElementById('cd-mins'),
+      secs:  document.getElementById('cd-secs'),
+    };
+    function pad(n) { return String(n).padStart(2, '0'); }
+    function tick() {
+      const diff = WEDDING_DATE - new Date();
+      if (diff <= 0) {
+        // Если дата уже наступила — обнуляем таймер
+        cd.days.textContent = cd.hours.textContent = cd.mins.textContent = cd.secs.textContent = '0';
+        return;
+      }
+      const s = Math.floor(diff / 1000);
+      cd.days.textContent  = Math.floor(s / 86400);
+      cd.hours.textContent = pad(Math.floor((s % 86400) / 3600));
+      cd.mins.textContent  = pad(Math.floor((s % 3600) / 60));
+      cd.secs.textContent  = pad(s % 60);
+    }
+    tick();
+    setInterval(tick, 1000);
+
+    /* ============================================================
+       2. АНИМАЦИЯ ПОЯВЛЕНИЯ БЛОКОВ (Intersection Observer)
+       ============================================================ */
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target); // анимируем один раз
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+    /* ============================================================
+       3. МОДАЛЬНОЕ ОКНО RSVP
+       ============================================================ */
+    const modal = document.getElementById('rsvpModal');
+    const form = document.getElementById('rsvpForm');
+    const thanks = document.getElementById('thanks');
+
+    function openModal() {
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden'; // блокируем фон
+    }
+    function closeModal() {
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    // Все кнопки с атрибутом data-open-rsvp открывают форму
+    document.querySelectorAll('[data-open-rsvp]').forEach((b) => b.addEventListener('click', openModal));
+    document.getElementById('modalClose').addEventListener('click', closeModal);
+    // Клик по затемнённому фону закрывает окно
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+    // Закрытие по Escape
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    // Отправка формы — сохраняем в localStorage (backend не нужен)
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = {
+        name:    document.getElementById('f-name').value,
+        phone:   document.getElementById('f-phone').value,
+        guests:  document.getElementById('f-guests').value,
+        comment: document.getElementById('f-comment').value,
+        date:    new Date().toISOString(),
+      };
+      // Читаем существующие ответы, добавляем новый и сохраняем
+      const all = JSON.parse(localStorage.getItem('rsvp_responses') || '[]');
+      all.push(data);
+      localStorage.setItem('rsvp_responses', JSON.stringify(all));
+
+      // Показываем экран благодарности
+      form.style.display = 'none';
+      thanks.classList.add('show');
+
+      // Через 2.5 сек закрываем окно и возвращаем форму в исходное состояние
+      setTimeout(() => {
+        closeModal();
+        setTimeout(() => {
+          form.reset();
+          form.style.display = 'block';
+          thanks.classList.remove('show');
+        }, 400);
+      }, 2500);
+    });
+
+    /* ============================================================
+       4. ДОБАВИТЬ В КАЛЕНДАРЬ (генерация .ics файла)
+       ============================================================ */
+    document.getElementById('addCalendar').addEventListener('click', () => {
+      const start = '20260824T160000';
+      const end   = '20260824T230000';
+      const ics = [
+        'BEGIN:VCALENDAR', 'VERSION:2.0', 'BEGIN:VEVENT',
+        'SUMMARY:Свадьба Александра и Марии',
+        'DTSTART:' + start, 'DTEND:' + end,
+        'LOCATION:' + VENUE_ADDRESS,
+        'DESCRIPTION:Будем рады видеть вас на нашем празднике!',
+        'END:VEVENT', 'END:VCALENDAR',
+      ].join('\r\n');
+
+      const blob = new Blob([ics], { type: 'text/calendar' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'wedding.ics';
+      link.click();
+      URL.revokeObjectURL(link.href);
+    });
+
+    /* ============================================================
+       5. ПОСТРОИТЬ МАРШРУТ (открываем Яндекс.Карты по адресу)
+       ============================================================ */
+    document.getElementById('routeBtn').addEventListener('click', () => {
+      const q = encodeURIComponent(VENUE_ADDRESS);
+      // Открываем Яндекс.Карты; при желании можно заменить на Google:
+      // 'https://www.google.com/maps/search/?api=1&query=' + q
+      window.open('https://yandex.ru/maps/?text=' + q, '_blank');
+    });
+
+    /* ============================================================
+       6. ДЕМО-ЗАГРУЗКА ФОТО (превью без сервера)
+       ============================================================ */
+    const photoInput = document.getElementById('photoInput');
+    const gallery = document.getElementById('gallery');
+    document.getElementById('uploadBtn').addEventListener('click', () => photoInput.click());
+    photoInput.addEventListener('change', () => {
+      [...photoInput.files].forEach((file) => {
+        if (!file.type.startsWith('image/')) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          const img = document.createElement('img');
+          img.src = ev.target.result;
+          gallery.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+      });
+      photoInput.value = ''; // позволяем выбрать те же файлы повторно
+    });
+
+    /* ============================================================
+       7. КНОПКА МУЗЫКИ (имитация состояния, без аудиофайла)
+       ============================================================ */
+    const musicBtn = document.getElementById('musicBtn');
+    const musicToast = document.getElementById('musicToast');
+    let musicOn = false;
+    let toastTimer;
+    musicBtn.addEventListener('click', () => {
+      musicOn = !musicOn;
+      musicBtn.classList.toggle('playing', musicOn);
+      musicToast.textContent = musicOn ? '🎵 Музыка включена' : '🔇 Музыка выключена';
+      musicToast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => musicToast.classList.remove('show'), 1800);
+
+      /* Если позже захотите реальный звук — раскомментируйте и добавьте файл:
+      if (!window._audio) { window._audio = new Audio('music.mp3'); window._audio.loop = true; }
+      musicOn ? window._audio.play() : window._audio.pause();
+      */
+    });
+  </script>
+</body>
+</html>
