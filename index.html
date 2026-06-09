@@ -741,6 +741,8 @@
   </footer>
 
   <!-- ===================== ПЛАВАЮЩАЯ МУЗЫКА ===================== -->
+  <!-- Реальный аудиофайл: нежная зацикленная петля. loop = бесконечное воспроизведение -->
+  <audio id="bgAudio" src="assets/wedding-music.wav" loop preload="auto"></audio>
   <span class="music-status" id="musicStatus" role="status" aria-live="polite"></span>
   <button class="music-btn" id="musicBtn" aria-pressed="false" aria-label="Включить фоновую музыку">
     <span class="ring" aria-hidden="true"></span>
@@ -997,8 +999,13 @@
        ========================================================= */
     var musicBtn    = document.getElementById('musicBtn');
     var musicStatus = document.getElementById('musicStatus');
+    var audio       = document.getElementById('bgAudio');   // реальный аудиофайл
     var playing     = false;
     var statusTimer = null;
+    var fadeTimer   = null;
+
+    var TARGET_VOL = 0.6;   // комфортная громкость фоновой музыки
+    audio.volume = 0;
 
     function showStatus(text) {
       musicStatus.textContent = text;
@@ -1007,14 +1014,45 @@
       statusTimer = setTimeout(function () { musicStatus.classList.remove('show'); }, 2200);
     }
 
+    // Плавное изменение громкости (нарастание/затухание ~0.6 c)
+    function fadeTo(target, onDone) {
+      clearInterval(fadeTimer);
+      fadeTimer = setInterval(function () {
+        var step = 0.05;
+        if (Math.abs(audio.volume - target) <= step) {
+          audio.volume = target;
+          clearInterval(fadeTimer);
+          if (onDone) onDone();
+        } else {
+          audio.volume += audio.volume < target ? step : -step;
+        }
+      }, 50);
+    }
+
+    function setUI(on) {
+      musicBtn.classList.toggle('playing', on);
+      musicBtn.setAttribute('aria-pressed', String(on));
+      musicBtn.setAttribute('aria-label', on ? 'Выключить фоновую музыку' : 'Включить фоновую музыку');
+      showStatus(on ? 'Музыка включена' : 'Музыка выключена');
+    }
+
     musicBtn.addEventListener('click', function () {
-      playing = !playing;
-      musicBtn.classList.toggle('playing', playing);
-      musicBtn.setAttribute('aria-pressed', String(playing));
-      musicBtn.setAttribute('aria-label', playing ? 'Выключить фоновую музыку' : 'Включить фоновую музыку');
-      showStatus(playing ? 'Музыка включена' : 'Музыка выключена');
-      /* Подключение реального аудиофайла:
-         var audio = new Audio('song.mp3'); playing ? audio.play() : audio.pause(); */
+      if (!playing) {
+        // play() возвращает промис: браузер разрешает звук после клика пользователя
+        var p = audio.play();
+        var start = function () { playing = true; setUI(true); fadeTo(TARGET_VOL); };
+        if (p && typeof p.then === 'function') {
+          p.then(start).catch(function () {
+            // если воспроизведение запрещено — показываем честный статус
+            showStatus('Не удалось включить звук');
+          });
+        } else { start(); }
+      } else {
+        // плавно приглушаем и ставим на паузу
+        fadeTo(0, function () { audio.pause(); });
+        playing = false;
+        setUI(false);
+      }
     });
 
   })();
