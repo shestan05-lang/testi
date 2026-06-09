@@ -1055,6 +1055,35 @@
       }
     });
 
+     /* ---- Автозапуск музыки при открытии страницы ----
+       1) Пробуем включить сразу.
+       2) Если браузер заблокировал автоплей (так делают почти все),
+          включаем при первом действии пользователя: клик / касание / скролл / клавиша.
+          Для гостя это выглядит как «музыка заиграла сама». */
+    function startMusic() {
+      if (playing) return;
+      var p = audio.play();
+      var ok = function () { playing = true; setUI(true); fadeTo(TARGET_VOL); };
+      if (p && typeof p.then === 'function') {
+        p.then(ok).catch(armFirstGesture);   // заблокировано — ждём действие
+      } else { ok(); }
+    }
+
+    function armFirstGesture() {
+      var events = ['click', 'keydown', 'touchstart', 'scroll'];
+      function once(e) {
+        events.forEach(function (ev) { window.removeEventListener(ev, once); });
+        // если нажали на саму кнопку музыки — пусть её обработчик и решает
+        if (musicBtn.contains(e.target)) return;
+        startMusic();
+      }
+      events.forEach(function (ev) {
+        window.addEventListener(ev, once, { once: true, passive: true });
+      });
+    }
+
+    startMusic();   // попытка автозапуска
+
   })();
   </script>
 </body>
