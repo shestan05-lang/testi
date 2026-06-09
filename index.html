@@ -2,1019 +2,1022 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <!-- Мобильный масштаб: лендинг проектируется в первую очередь под телефоны -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Александр & Мария — Свадебное приглашение</title>
+  <!-- Мобильный viewport: НЕ блокируем зум (доступность) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#F4F8F3" />
+  <title>Александр &amp; Мария — Приглашение на свадьбу</title>
+  <meta name="description" content="Свадебное приглашение: Александр и Мария, 24 августа 2026 года." />
 
-  <!-- Подключаем шрифты Google Fonts: декоративный для заголовков + чистый sans для текста -->
+  <!-- ===== Google Fonts ===== -->
+  <!-- Great Vibes — рукописный акцент (имена, подпись) -->
+  <!-- Cormorant Garamond — элегантный serif (заголовки, текст) -->
+  <!-- Jost — чистый sans для подписей, таймера и кнопок -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&family=Great+Vibes&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Great+Vibes&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <style>
-    /* ============================================================
-       ПЕРЕМЕННЫЕ ТЕМЫ
-       Меняя эти значения, можно быстро перекрасить весь сайт.
-       ============================================================ */
+    /* =========================================================
+       1. ДИЗАЙН-ТОКЕНЫ (палитра «белый + мягкий зелёный»)
+       ========================================================= */
     :root {
-      --green-deep:  #5a7a5e;   /* основной зелёный (акценты, кнопки) */
-      --green-soft:  #88a98b;   /* мягкий зелёный */
-      --green-mist:  #eaf1ea;   /* очень светлый зелёный фон */
-      --green-line:  #cdddce;   /* линии/границы */
-      --cream:       #fbfdfb;   /* почти белый фон */
-      --white:       #ffffff;
-      --ink:         #34403a;   /* основной цвет текста */
-      --ink-soft:    #6c7a70;   /* приглушённый текст */
-      --shadow:      0 18px 50px rgba(90, 122, 94, 0.12);
-      --shadow-soft: 0 10px 30px rgba(90, 122, 94, 0.08);
-      --radius:      28px;
-      --radius-sm:   18px;
+      --green-50:  #F4F8F3;
+      --green-100: #E8F0E6;
+      --green-200: #D6E4D2;
+      --green-300: #B7CDB0;
+      --green-400: #93B389;
+      --green-500: #739B68;   /* основной мягкий зелёный */
+      --green-600: #5C8053;
+      --green-700: #46633F;   /* кнопки: контраст с белым ~6:1 */
+      --green-800: #34492F;
+
+      --ink:        #2B362B;  /* основной текст */
+      --muted-ink:  #5E6B5C;  /* вторичный текст */
+      --bg:         #FBFCFA;  /* фон страницы */
+      --card:       #FFFFFF;  /* карточки */
+      --border:     #E6EEE3;  /* рамки/разделители */
+      --gold:       #C7B27E;  /* деликатный акцент */
+
+      /* Мягкие тени (стиль Soft UI Evolution) */
+      --shadow-sm: 0 4px 14px -8px rgba(60, 80, 55, 0.20);
+      --shadow:    0 14px 36px -16px rgba(60, 80, 55, 0.22);
+      --shadow-lg: 0 24px 60px -24px rgba(60, 80, 55, 0.28);
+
+      --radius:    22px;      /* закругление карточек */
+      --radius-sm: 14px;
+      --maxw:      560px;     /* «мобильный» контейнер */
+
+      --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
     }
 
-    /* ============================================================
-       БАЗОВЫЕ СТИЛИ
-       ============================================================ */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    /* =========================================================
+       2. БАЗОВЫЕ СТИЛИ
+       ========================================================= */
+    *, *::before, *::after { box-sizing: border-box; }
 
-    html { scroll-behavior: smooth; } /* плавный скролл по якорям */
+    html {
+      scroll-behavior: smooth;          /* плавный скролл по якорям */
+      -webkit-text-size-adjust: 100%;
+    }
 
     body {
-      font-family: 'Jost', sans-serif;
+      margin: 0;
+      background: var(--bg);
       color: var(--ink);
-      background: var(--cream);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 19px;
       line-height: 1.65;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
+      overflow-x: hidden;               /* без горизонтального скролла */
+      /* Лёгкий зелёный градиентный фон-«воздух» */
+      background-image:
+        radial-gradient(120% 60% at 50% -10%, var(--green-50) 0%, transparent 60%),
+        radial-gradient(80% 50% at 100% 100%, var(--green-50) 0%, transparent 55%);
+      background-attachment: fixed;
     }
 
-    h1, h2, h3 {
-      font-family: 'Cormorant Garamond', serif;
+    img { max-width: 100%; display: block; }
+
+    h1, h2, h3 { margin: 0; font-weight: 600; line-height: 1.15; }
+
+    /* «Sans»-метки: даты, таймер, подписи, кнопки */
+    .ui-label {
+      font-family: 'Jost', system-ui, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      font-size: 0.72rem;
       font-weight: 500;
-      line-height: 1.15;
-      letter-spacing: 0.5px;
+      color: var(--green-600);
     }
 
-    p { font-weight: 300; }
-
-    /* Контейнер: узкий, чтобы держать «мобильную» ширину даже на десктопе */
+    /* Контейнер «мобильного лендинга», центрирован на десктопе */
     .wrap {
       width: 100%;
-      max-width: 520px;
+      max-width: var(--maxw);
       margin: 0 auto;
       padding: 0 22px;
     }
 
-    section { padding: 64px 0; }
+    section { padding: 54px 0; position: relative; }
 
-    /* Заголовок секции с маленькой подписью сверху */
-    .section-tag {
-      font-family: 'Jost', sans-serif;
-      font-weight: 400;
-      font-size: 12px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--green-soft);
-      text-align: center;
-      margin-bottom: 10px;
-    }
-    .section-title {
-      font-size: 34px;
-      text-align: center;
-      color: var(--ink);
-      margin-bottom: 34px;
-    }
-
-    /* Декоративный разделитель «листик» */
+    /* Декоративная тонкая линия-разделитель */
     .divider {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      color: var(--green-soft);
-      margin: 0 auto 34px;
+      display: flex; align-items: center; justify-content: center;
+      gap: 14px; margin: 6px auto 30px; color: var(--green-300);
     }
-    .divider::before,
-    .divider::after {
-      content: "";
-      height: 1px;
-      width: 46px;
-      background: var(--green-line);
+    .divider::before, .divider::after {
+      content: ""; height: 1px; width: 56px;
+      background: linear-gradient(90deg, transparent, var(--green-300));
+    }
+    .divider::after { background: linear-gradient(90deg, var(--green-300), transparent); }
+    .divider svg { width: 16px; height: 16px; }
+
+    .eyebrow { text-align: center; margin-bottom: 8px; }
+    .section-title {
+      text-align: center;
+      font-size: clamp(2rem, 7vw, 2.6rem);
+      color: var(--green-800);
+      margin-bottom: 4px;
     }
 
-    /* ============================================================
-       КАРТОЧКИ
-       ============================================================ */
-    .card {
-      background: var(--white);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow-soft);
-      padding: 32px 26px;
-      border: 1px solid rgba(205, 221, 206, 0.5);
-    }
-
-    /* ============================================================
-       КНОПКИ
-       ============================================================ */
+    /* =========================================================
+       3. КНОПКИ
+       ========================================================= */
     .btn {
+      font-family: 'Jost', sans-serif;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      border: none;
+      border-radius: 999px;
+      padding: 15px 30px;
+      min-height: 52px;           /* touch target >= 44px */
+      font-size: 1rem;
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      font-family: 'Jost', sans-serif;
-      font-size: 15px;
-      font-weight: 400;
-      letter-spacing: 0.5px;
-      padding: 15px 30px;
-      border-radius: 100px;
-      border: none;
-      cursor: pointer;
-      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+      gap: 9px;
+      transition: transform .2s var(--ease), box-shadow .2s var(--ease), background .2s var(--ease);
       text-decoration: none;
-      white-space: nowrap;
     }
-    .btn-primary {
-      background: var(--green-deep);
-      color: #fff;
-      box-shadow: 0 10px 24px rgba(90, 122, 94, 0.28);
-    }
-    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 16px 30px rgba(90, 122, 94, 0.34); }
-    .btn-outline {
-      background: transparent;
-      color: var(--green-deep);
-      border: 1.5px solid var(--green-line);
-    }
-    .btn-outline:hover { transform: translateY(-3px); background: var(--green-mist); }
-    .btn-block { width: 100%; }
+    .btn:focus-visible { outline: 3px solid var(--green-300); outline-offset: 3px; }
+    .btn:active { transform: scale(0.97); }
 
-    /* ============================================================
-       1. ПЕРВЫЙ ЭКРАН (HERO)
-       ============================================================ */
+    .btn-primary {
+      background: var(--green-700);
+      color: #fff;
+      box-shadow: var(--shadow);
+    }
+    .btn-primary:hover { background: var(--green-800); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+
+    .btn-outline {
+      background: var(--card);
+      color: var(--green-700);
+      border: 1.5px solid var(--green-300);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-outline:hover { background: var(--green-50); transform: translateY(-2px); }
+
+    .btn svg { width: 19px; height: 19px; flex: none; }
+
+    /* =========================================================
+       4. КАРТОЧКИ
+       ========================================================= */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 30px 26px;
+    }
+
+    /* =========================================================
+       5. HERO (первый экран)
+       ========================================================= */
     .hero {
-      position: relative;
-      min-height: 100vh;
       min-height: 100svh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 80px 22px 60px;
-      background:
-        radial-gradient(circle at 50% 0%, var(--green-mist), transparent 60%),
-        linear-gradient(180deg, #f3f8f3 0%, var(--cream) 100%);
+      padding: 70px 22px 56px;
+      position: relative;
       overflow: hidden;
     }
-
-    /* Декоративные «акварельные» пятна-листья на фоне */
-    .hero-blob {
+    /* Декоративные «листья»-пятна на фоне героя */
+    .hero-leaf {
       position: absolute;
-      border-radius: 50%;
-      filter: blur(8px);
-      opacity: 0.5;
+      color: var(--green-200);
+      opacity: 0.7;
       pointer-events: none;
+      z-index: 0;
     }
-    .hero-blob.b1 { width: 240px; height: 240px; top: -60px; left: -70px;
-      background: radial-gradient(circle, #cfe3d0, transparent 70%); }
-    .hero-blob.b2 { width: 300px; height: 300px; bottom: -90px; right: -90px;
-      background: radial-gradient(circle, #dce9dc, transparent 70%); }
+    .hero-leaf.l1 { top: -30px; left: -40px; width: 200px; transform: rotate(-15deg); }
+    .hero-leaf.l2 { bottom: -50px; right: -60px; width: 260px; transform: rotate(160deg); }
+    .hero > * { position: relative; z-index: 1; }
 
-    /* Тонкая декоративная веточка (SVG) сверху */
-    .hero-sprig { color: var(--green-soft); margin-bottom: 18px; }
+    .hero .ui-label { color: var(--gold); }
 
-    .hero h1 {
-      font-size: 52px;
-      color: var(--green-deep);
-      margin-bottom: 6px;
-    }
-    .hero .amp { font-style: italic; color: var(--green-soft); }
-    .hero-sub {
+    .hero-names {
       font-family: 'Great Vibes', cursive;
-      font-size: 30px;
-      color: var(--green-soft);
-      margin-bottom: 20px;
+      font-weight: 400;
+      font-size: clamp(3.4rem, 16vw, 5.6rem);
+      line-height: 1.0;
+      color: var(--green-800);
+      margin: 12px 0 6px;
+    }
+    .hero-amp { color: var(--gold); display: inline-block; padding: 0 4px; }
+
+    .hero-sub {
+      font-size: clamp(1.4rem, 6vw, 1.9rem);
+      font-style: italic;
+      color: var(--green-600);
+      margin-bottom: 22px;
     }
     .hero-date {
       font-family: 'Jost', sans-serif;
-      font-size: 13px;
-      letter-spacing: 5px;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: var(--ink-soft);
-      margin-bottom: 34px;
+      font-size: 0.95rem;
+      color: var(--ink);
+      padding: 10px 0 4px;
     }
 
-    /* Таймер обратного отсчёта */
+    /* ---- Таймер обратного отсчёта ---- */
     .countdown {
       display: flex;
       gap: 10px;
       justify-content: center;
-      margin-bottom: 36px;
+      margin: 26px 0 30px;
+      flex-wrap: wrap;
     }
-    .cd-cell {
-      background: rgba(255, 255, 255, 0.75);
+    .cd-unit {
+      background: rgba(255,255,255,0.7);
       backdrop-filter: blur(4px);
-      border: 1px solid var(--green-line);
+      border: 1px solid var(--border);
       border-radius: var(--radius-sm);
-      padding: 14px 6px;
-      min-width: 68px;
-      box-shadow: var(--shadow-soft);
+      min-width: 70px;
+      padding: 14px 8px 10px;
+      box-shadow: var(--shadow-sm);
     }
     .cd-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 34px;
-      font-weight: 600;
-      color: var(--green-deep);
+      font-family: 'Jost', sans-serif;
+      font-weight: 500;
+      font-size: 1.9rem;
+      color: var(--green-800);
+      font-variant-numeric: tabular-nums;   /* цифры не «прыгают» */
       line-height: 1;
     }
-    .cd-label {
-      font-size: 10px;
-      letter-spacing: 1.5px;
+    .cd-word {
+      font-family: 'Jost', sans-serif;
       text-transform: uppercase;
-      color: var(--ink-soft);
+      letter-spacing: 0.12em;
+      font-size: 0.6rem;
+      color: var(--muted-ink);
       margin-top: 6px;
     }
 
     .scroll-hint {
-      position: absolute;
-      bottom: 22px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: var(--green-soft);
-      font-size: 22px;
-      animation: bob 1.8s ease-in-out infinite;
+      margin-top: 8px;
+      color: var(--green-400);
+      animation: bob 2.4s var(--ease) infinite;
     }
-    @keyframes bob { 0%,100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 8px); } }
+    @keyframes bob { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(7px);} }
 
-    /* ============================================================
-       2. ТЕКСТ ПРИГЛАШЕНИЯ
-       ============================================================ */
-    .invite-card { text-align: center; }
-    .invite-card .lead {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 22px;
+    /* =========================================================
+       6. ТЕКСТ ПРИГЛАШЕНИЯ
+       ========================================================= */
+    .invite-text {
+      text-align: center;
+      font-size: 1.25rem;
+      color: var(--ink);
       font-style: italic;
-      color: var(--green-deep);
-      margin-bottom: 16px;
     }
-    .invite-card p { color: var(--ink-soft); font-size: 16px; }
+    .invite-text p { margin: 0 0 14px; }
+    .invite-text p:last-child { margin-bottom: 0; }
 
-    /* ============================================================
-       3. ПРОГРАММА ДНЯ — вертикальный таймлайн
-       ============================================================ */
-    .timeline { position: relative; padding-left: 38px; }
+    /* =========================================================
+       7. ПРОГРАММА ДНЯ (таймлайн)
+       ========================================================= */
+    .timeline { list-style: none; margin: 0; padding: 6px 0 0; position: relative; }
     .timeline::before {
-      content: "";
-      position: absolute;
-      left: 11px; top: 6px; bottom: 6px;
-      width: 2px;
-      background: var(--green-line);
+      content: ""; position: absolute; left: 64px; top: 8px; bottom: 8px;
+      width: 2px; background: linear-gradient(var(--green-200), var(--green-100));
     }
-    .tl-item { position: relative; padding-bottom: 28px; }
-    .tl-item:last-child { padding-bottom: 0; }
-    .tl-item::before {
-      content: "";
-      position: absolute;
-      left: -32px; top: 4px;
-      width: 14px; height: 14px;
-      border-radius: 50%;
-      background: var(--white);
-      border: 3px solid var(--green-soft);
-      box-shadow: 0 0 0 4px var(--green-mist);
+    .tl-item {
+      display: grid;
+      grid-template-columns: 56px 28px 1fr;
+      align-items: start;
+      gap: 8px;
+      padding: 12px 0;
     }
     .tl-time {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 22px;
-      font-weight: 600;
-      color: var(--green-deep);
+      font-family: 'Jost', sans-serif; font-weight: 500;
+      color: var(--green-700); font-size: 1rem; padding-top: 2px;
+      font-variant-numeric: tabular-nums;
     }
-    .tl-text { color: var(--ink-soft); font-size: 15px; }
+    .tl-dot {
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--card); border: 3px solid var(--green-400);
+      margin: 6px auto 0; box-shadow: 0 0 0 4px var(--green-50); z-index: 1;
+    }
+    .tl-label { font-size: 1.18rem; color: var(--ink); padding-top: 1px; }
 
-    /* ============================================================
-       4. МЕНЮ
-       ============================================================ */
-    .menu-grid { display: grid; gap: 16px; }
+    /* =========================================================
+       8. МЕНЮ
+       ========================================================= */
+    .menu-grid { display: grid; gap: 14px; }
+    @media (min-width: 480px) { .menu-grid { grid-template-columns: 1fr 1fr; } }
     .menu-item {
-      display: flex;
-      gap: 16px;
-      align-items: flex-start;
-      padding: 18px 20px;
-      background: var(--green-mist);
-      border-radius: var(--radius-sm);
+      text-align: center; padding: 22px 16px;
+      border: 1px solid var(--border); border-radius: var(--radius-sm);
+      background: var(--green-50);
     }
-    .menu-ico { font-size: 26px; line-height: 1; }
-    .menu-item h3 { font-size: 21px; color: var(--ink); }
-    .menu-item p { font-size: 14px; color: var(--ink-soft); }
+    .menu-item .icon { color: var(--green-500); margin: 0 auto 10px; width: 30px; height: 30px; }
+    .menu-item h3 { font-size: 1.3rem; color: var(--green-800); }
+    .menu-item p { margin: 4px 0 0; color: var(--muted-ink); font-size: 1rem; }
 
-    /* ============================================================
-       5. ПОДАРКИ / 6. ПРИМЕЧАНИЯ — общие мягкие блоки
-       ============================================================ */
+    /* =========================================================
+       9. ПОДАРКИ / ПРИМЕЧАНИЯ
+       ========================================================= */
     .soft-card { text-align: center; }
-    .soft-card .ico-round {
-      width: 64px; height: 64px;
-      margin: 0 auto 18px;
-      display: grid; place-items: center;
-      border-radius: 50%;
-      background: var(--green-mist);
-      font-size: 28px;
-    }
-    .soft-card p { color: var(--ink-soft); font-size: 16px; }
+    .soft-card .icon { color: var(--gold); width: 40px; height: 40px; margin: 0 auto 14px; }
+    .soft-card p { margin: 0; font-size: 1.2rem; font-style: italic; color: var(--ink); }
 
-    .notes-list { list-style: none; display: grid; gap: 14px; }
-    .note-row {
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-      padding: 16px 18px;
-      border: 1px solid var(--green-line);
-      border-radius: var(--radius-sm);
-      background: var(--white);
+    .notes-list { list-style: none; margin: 0; padding: 0; }
+    .notes-list li {
+      display: flex; gap: 12px; align-items: flex-start;
+      padding: 12px 0; border-bottom: 1px dashed var(--border);
+      font-size: 1.1rem;
     }
-    .note-row .dot { color: var(--green-soft); font-size: 18px; margin-top: 2px; }
-    .note-row b { font-weight: 500; color: var(--ink); }
-    .note-row span { color: var(--ink-soft); font-size: 15px; }
+    .notes-list li:last-child { border-bottom: none; }
+    .notes-list .icon { color: var(--green-500); flex: none; width: 22px; height: 22px; margin-top: 4px; }
+    .notes-list b { color: var(--green-800); font-weight: 600; }
 
-    .important {
-      margin-top: 18px;
-      padding: 18px 20px;
-      border-radius: var(--radius-sm);
-      background: linear-gradient(135deg, #f0f6f0, #e6f0e6);
-      text-align: center;
-      color: var(--green-deep);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 19px;
-      font-style: italic;
-    }
-
-    /* ============================================================
-       7. RSVP + 8. МЕСТО
-       ============================================================ */
+    /* =========================================================
+       10. RSVP / КАЛЕНДАРЬ
+       ========================================================= */
     .rsvp-card { text-align: center; }
-    .date-badge {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 14px 28px;
-      border-radius: var(--radius-sm);
-      background: var(--green-deep);
-      color: #fff;
-      margin-bottom: 22px;
+    .cal-chip {
+      display: inline-flex; flex-direction: column; align-items: center;
+      border: 1px solid var(--border); border-radius: var(--radius-sm);
+      overflow: hidden; margin-bottom: 22px; box-shadow: var(--shadow-sm);
+      width: 130px;
     }
-    .date-badge .d-day { font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 600; line-height: 1; }
-    .date-badge .d-mon { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; margin-top: 4px; opacity: 0.9; }
-    .btn-row { display: flex; flex-direction: column; gap: 12px; margin-top: 6px; }
+    .cal-chip .cal-month {
+      background: var(--green-700); color: #fff; width: 100%;
+      font-family: 'Jost', sans-serif; text-transform: uppercase;
+      letter-spacing: 0.2em; font-size: 0.78rem; padding: 7px 0;
+    }
+    .cal-chip .cal-day { font-family: 'Jost', sans-serif; font-weight: 600; font-size: 3rem; color: var(--green-800); padding: 6px 0 2px; }
+    .cal-chip .cal-year { font-family: 'Jost', sans-serif; color: var(--muted-ink); font-size: 0.85rem; padding-bottom: 10px; }
+    .btn-row { display: flex; flex-direction: column; gap: 12px; }
+    @media (min-width: 420px) { .btn-row { flex-direction: row; justify-content: center; } }
 
-    /* Карта-блок (декоративная) */
+    /* =========================================================
+       11. МЕСТО ПРОВЕДЕНИЯ (декоративная «карта»)
+       ========================================================= */
     .map-card { padding: 0; overflow: hidden; }
     .map-visual {
-      position: relative;
-      height: 180px;
-      background:
-        linear-gradient(135deg, #dcebdd 0%, #cfe3d0 100%),
-        var(--green-mist);
-      background-blend-mode: normal;
+      position: relative; height: 190px;
+      background: linear-gradient(135deg, var(--green-100), var(--green-200));
+      display: flex; align-items: center; justify-content: center;
     }
-    /* Имитация дорог на декоративной карте */
-    .map-visual::before,
-    .map-visual::after {
-      content: "";
-      position: absolute;
-      background: rgba(255,255,255,0.7);
-    }
-    .map-visual::before { width: 140%; height: 14px; top: 40%; left: -20%; transform: rotate(-12deg); }
-    .map-visual::after  { width: 14px; height: 140%; left: 60%; top: -20%; transform: rotate(8deg); }
+    .map-visual svg.roads { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.5; }
     .map-pin {
-      position: absolute;
-      top: 42%; left: 50%;
-      transform: translate(-50%, -100%);
-      font-size: 38px;
-      filter: drop-shadow(0 6px 8px rgba(0,0,0,0.15));
-      animation: bob 2s ease-in-out infinite;
+      position: relative; z-index: 1; color: var(--green-800);
+      width: 46px; height: 46px;
+      filter: drop-shadow(0 6px 8px rgba(52,73,47,0.35));
+      animation: drop .8s var(--ease) both;
     }
-    .map-info { padding: 24px 26px; text-align: center; }
-    .map-info h3 { font-size: 24px; color: var(--ink); margin-bottom: 4px; }
-    .map-info p { color: var(--ink-soft); font-size: 15px; margin-bottom: 18px; }
+    @keyframes drop { from { transform: translateY(-18px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .map-info { padding: 24px 26px 28px; text-align: center; }
+    .map-info h3 { font-size: 1.5rem; color: var(--green-800); }
+    .map-info .addr { color: var(--muted-ink); margin: 6px 0 18px; font-size: 1.1rem; }
 
-    /* ============================================================
-       9. ФОТО ПОСЛЕ СВАДЬБЫ
-       ============================================================ */
-    .photo-card { text-align: center; }
-    .photo-card p { color: var(--ink-soft); font-size: 16px; margin-bottom: 20px; }
+    /* =========================================================
+       12. ФОТО ПОСЛЕ СВАДЬБЫ
+       ========================================================= */
+    .gallery-empty { text-align: center; color: var(--muted-ink); font-style: italic; margin-bottom: 18px; font-size: 1.1rem; }
     .gallery {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-top: 20px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 18px;
     }
-    .gallery:empty { display: none; }
     .gallery img {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      object-fit: cover;
-      border-radius: 14px;
-      box-shadow: var(--shadow-soft);
-      animation: fadeScale 0.5s ease both;
+      width: 100%; aspect-ratio: 1; object-fit: cover;
+      border-radius: 12px; box-shadow: var(--shadow-sm);
+      animation: fadeIn .5s var(--ease) both;
     }
-    @keyframes fadeScale { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+    @keyframes fadeIn { from { opacity: 0; transform: scale(0.96);} to { opacity:1; transform: scale(1);} }
+    input[type="file"] { display: none; }
 
-    /* ============================================================
-       10. ФИНАЛЬНЫЙ БЛОК
-       ============================================================ */
-    .final {
-      text-align: center;
-      padding: 80px 22px 90px;
-      background: radial-gradient(circle at 50% 100%, var(--green-mist), transparent 65%);
-    }
+    /* =========================================================
+       13. ФИНАЛ / ПОДПИСЬ
+       ========================================================= */
+    .final { text-align: center; padding: 70px 22px 100px; }
     .final .sign {
       font-family: 'Great Vibes', cursive;
-      font-size: 50px;
-      color: var(--green-deep);
-      line-height: 1.2;
+      font-size: clamp(2.4rem, 11vw, 3.6rem);
+      color: var(--green-800);
+      margin-top: 8px;
     }
-    .final .with-love {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 20px;
-      color: var(--ink-soft);
-      margin-bottom: 6px;
-    }
-    .final .heart { color: var(--green-soft); font-size: 22px; margin-top: 14px; }
+    .final .with-love { font-style: italic; color: var(--muted-ink); font-size: 1.2rem; }
 
-    /* ============================================================
-       ПЛАВАЮЩАЯ КНОПКА МУЗЫКИ
-       ============================================================ */
+    /* =========================================================
+       14. ПЛАВАЮЩАЯ КНОПКА МУЗЫКИ
+       ========================================================= */
     .music-btn {
-      position: fixed;
-      top: 16px; right: 16px;
-      z-index: 50;
-      width: 48px; height: 48px;
-      border-radius: 50%;
-      border: 1px solid var(--green-line);
-      background: rgba(255,255,255,0.85);
-      backdrop-filter: blur(6px);
-      box-shadow: var(--shadow-soft);
-      cursor: pointer;
-      font-size: 20px;
-      display: grid; place-items: center;
-      transition: transform 0.25s ease;
+      position: fixed; right: 16px; bottom: 16px; z-index: 50;
+      width: 54px; height: 54px; border-radius: 50%;
+      background: var(--card); border: 1px solid var(--border);
+      box-shadow: var(--shadow); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--green-700); transition: transform .2s var(--ease);
     }
-    .music-btn:hover { transform: scale(1.08); }
-    .music-btn.playing { background: var(--green-deep); border-color: var(--green-deep); }
-    /* Анимация «вращения» ноты, когда музыка включена */
-    .music-btn.playing .note { animation: spin 3s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* Всплывающая подпись состояния музыки */
-    .music-toast {
-      position: fixed;
-      top: 74px; right: 16px;
-      z-index: 50;
-      background: var(--ink);
-      color: #fff;
-      font-size: 13px;
-      padding: 8px 14px;
-      border-radius: 100px;
-      opacity: 0;
-      transform: translateY(-6px);
-      pointer-events: none;
-      transition: opacity 0.3s ease, transform 0.3s ease;
+    .music-btn:hover { transform: scale(1.07); }
+    .music-btn:focus-visible { outline: 3px solid var(--green-300); outline-offset: 3px; }
+    .music-btn.playing { background: var(--green-700); color: #fff; }
+    .music-btn.playing .ring {
+      position: absolute; inset: -6px; border-radius: 50%;
+      border: 2px solid var(--green-300); animation: pulse 1.8s ease-out infinite;
     }
-    .music-toast.show { opacity: 0.95; transform: translateY(0); }
+    @keyframes pulse { 0%{ transform: scale(0.9); opacity: .8;} 100%{ transform: scale(1.4); opacity: 0;} }
+    /* Маленькая всплывающая подсказка состояния музыки */
+    .music-status {
+      position: fixed; right: 80px; bottom: 28px; z-index: 50;
+      background: var(--ink); color: #fff; font-family: 'Jost', sans-serif;
+      font-size: 0.8rem; padding: 7px 14px; border-radius: 999px;
+      opacity: 0; transform: translateX(8px); pointer-events: none;
+      transition: opacity .25s var(--ease), transform .25s var(--ease);
+      white-space: nowrap;
+    }
+    .music-status.show { opacity: 1; transform: translateX(0); }
 
-    /* ============================================================
-       МОДАЛЬНОЕ ОКНО RSVP
-       ============================================================ */
+    /* =========================================================
+       15. МОДАЛЬНОЕ ОКНО RSVP
+       ========================================================= */
     .modal-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      background: rgba(52, 64, 58, 0.5);
-      backdrop-filter: blur(4px);
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-      padding: 0;
+      position: fixed; inset: 0; z-index: 100;
+      background: rgba(34, 45, 34, 0.5);   /* затемнение ~50% */
+      backdrop-filter: blur(3px);
+      display: flex; align-items: flex-end; justify-content: center;
+      opacity: 0; visibility: hidden; transition: opacity .25s var(--ease), visibility .25s;
     }
-    .modal-overlay.open { opacity: 1; pointer-events: auto; }
+    .modal-overlay.open { opacity: 1; visibility: visible; }
+    @media (min-width: 560px) { .modal-overlay { align-items: center; padding: 20px; } }
 
     .modal {
-      background: var(--white);
-      width: 100%;
-      max-width: 480px;
-      border-radius: 28px 28px 0 0;
-      padding: 30px 26px calc(30px + env(safe-area-inset-bottom));
-      transform: translateY(40px);
-      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-      max-height: 92vh;
-      overflow-y: auto;
+      background: var(--card);
+      width: 100%; max-width: 460px;
+      border-radius: 24px 24px 0 0;
+      padding: 26px 24px calc(26px + env(safe-area-inset-bottom));
+      box-shadow: var(--shadow-lg);
+      transform: translateY(30px);
+      transition: transform .3s var(--ease);
+      max-height: 92vh; overflow-y: auto;
     }
+    @media (min-width: 560px) { .modal { border-radius: 24px; transform: scale(0.96); } }
     .modal-overlay.open .modal { transform: translateY(0); }
+    @media (min-width: 560px) { .modal-overlay.open .modal { transform: scale(1); } }
 
-    .modal h3 { font-size: 28px; text-align: center; color: var(--green-deep); margin-bottom: 4px; }
-    .modal .modal-sub { text-align: center; color: var(--ink-soft); font-size: 14px; margin-bottom: 24px; }
-
-    .field { margin-bottom: 16px; }
-    .field label {
-      display: block;
-      font-size: 13px;
-      color: var(--ink-soft);
-      margin-bottom: 6px;
-      letter-spacing: 0.5px;
-    }
-    .field input,
-    .field textarea {
-      width: 100%;
-      font-family: 'Jost', sans-serif;
-      font-size: 15px;
-      color: var(--ink);
-      padding: 13px 16px;
-      border: 1.5px solid var(--green-line);
-      border-radius: 14px;
-      background: var(--cream);
-      transition: border-color 0.2s ease, background 0.2s ease;
-    }
-    .field input:focus,
-    .field textarea:focus {
-      outline: none;
-      border-color: var(--green-soft);
-      background: #fff;
-    }
-    .field textarea { resize: vertical; min-height: 70px; }
-
+    .modal-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+    .modal h3 { font-size: 1.8rem; color: var(--green-800); }
+    .modal .modal-desc { color: var(--muted-ink); font-size: 1.05rem; margin: 0 0 18px; }
     .modal-close {
-      position: absolute;
-      top: 14px; right: 18px;
-      background: none; border: none;
-      font-size: 26px;
-      color: var(--ink-soft);
-      cursor: pointer;
-      line-height: 1;
+      flex: none; width: 40px; height: 40px; border-radius: 50%;
+      border: 1px solid var(--border); background: var(--green-50);
+      cursor: pointer; color: var(--ink); display: flex; align-items: center; justify-content: center;
     }
-    .modal-inner { position: relative; }
+    .modal-close:hover { background: var(--green-100); }
+
+    .field { margin-bottom: 16px; text-align: left; }
+    .field label {
+      display: block; font-family: 'Jost', sans-serif; font-size: 0.82rem;
+      font-weight: 500; color: var(--green-700); margin-bottom: 6px; letter-spacing: 0.03em;
+    }
+    .field label .req { color: var(--gold); }
+    .field input, .field textarea, .field select {
+      width: 100%; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem;
+      padding: 13px 15px; min-height: 50px;
+      border: 1.5px solid var(--border); border-radius: 12px;
+      background: var(--green-50); color: var(--ink);
+      transition: border-color .2s var(--ease), background .2s var(--ease);
+    }
+    .field textarea { min-height: 80px; resize: vertical; line-height: 1.5; }
+    .field input:focus, .field textarea:focus, .field select:focus {
+      outline: none; border-color: var(--green-400); background: #fff;
+      box-shadow: 0 0 0 4px var(--green-50);
+    }
+    .field .error-msg { color: #b4452f; font-family: 'Jost', sans-serif; font-size: 0.78rem; margin-top: 5px; display: none; }
+    .field.invalid input, .field.invalid select { border-color: #d98c79; }
+    .field.invalid .error-msg { display: block; }
+
+    .modal .btn-primary { width: 100%; margin-top: 6px; }
 
     /* Экран благодарности после отправки */
-    .thanks { text-align: center; padding: 20px 0; display: none; }
-    .thanks.show { display: block; animation: fadeScale 0.5s ease both; }
-    .thanks .big { font-size: 60px; margin-bottom: 12px; }
-    .thanks h3 { font-size: 30px; color: var(--green-deep); margin-bottom: 8px; }
-    .thanks p { color: var(--ink-soft); font-size: 15px; }
+    .thanks { text-align: center; padding: 18px 6px 8px; display: none; }
+    .thanks.show { display: block; animation: fadeIn .4s var(--ease) both; }
+    .thanks .check {
+      width: 76px; height: 76px; margin: 0 auto 16px; border-radius: 50%;
+      background: var(--green-100); color: var(--green-700);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .thanks h3 { color: var(--green-800); margin-bottom: 8px; }
+    .thanks p { color: var(--muted-ink); font-size: 1.1rem; margin: 0 0 20px; }
 
-    /* ============================================================
-       АНИМАЦИЯ ПОЯВЛЕНИЯ БЛОКОВ ПРИ СКРОЛЛЕ
-       ============================================================ */
+    /* =========================================================
+       16. АНИМАЦИЯ ПОЯВЛЕНИЯ БЛОКОВ
+       ========================================================= */
     .reveal {
       opacity: 0;
-      transform: translateY(34px);
-      transition: opacity 0.9s ease, transform 0.9s ease;
+      transform: translateY(26px);
+      transition: opacity .7s var(--ease), transform .7s var(--ease);
     }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal.visible { opacity: 1; transform: none; }
 
-    /* Уважение к настройке «уменьшить движение» */
+    /* Уважаем настройку «уменьшить движение» */
     @media (prefers-reduced-motion: reduce) {
-      * { animation: none !important; scroll-behavior: auto; }
-      .reveal { opacity: 1; transform: none; transition: none; }
-    }
-
-    /* ============================================================
-       ДЕСКТОП: аккуратная подача «телефона» по центру
-       ============================================================ */
-    @media (min-width: 700px) {
-      body {
-        background:
-          radial-gradient(circle at 50% 0%, #eef4ee, transparent 50%),
-          var(--cream);
-      }
-      .hero h1 { font-size: 64px; }
-      .section-title { font-size: 40px; }
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1 !important; transform: none !important; transition: none; }
+      .scroll-hint, .music-btn.playing .ring, .map-pin { animation: none; }
+      * { transition-duration: 0.001ms !important; }
     }
   </style>
 </head>
+
 <body>
 
-  <!-- Кнопка музыки (имитация, без реального аудио) -->
-  <button class="music-btn" id="musicBtn" aria-label="Включить музыку">
-    <span class="note">♪</span>
-  </button>
-  <div class="music-toast" id="musicToast">Музыка включена</div>
-
-  <!-- ============================================================
-       1. ПЕРВЫЙ ЭКРАН
-       ============================================================ -->
-  <header class="hero">
-    <div class="hero-blob b1"></div>
-    <div class="hero-blob b2"></div>
-
-    <!-- Декоративная веточка -->
-    <svg class="hero-sprig" width="60" height="34" viewBox="0 0 60 34" fill="none">
-      <path d="M30 32 C30 20 30 12 30 2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
-      <path d="M30 12 C22 10 16 6 12 0 M30 12 C38 10 44 6 48 0" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
-      <path d="M30 20 C24 19 19 16 15 11 M30 20 C36 19 41 16 45 11" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
-      <circle cx="30" cy="3" r="2.4" fill="currentColor"/>
+  <!-- ============================ 1. HERO ============================ -->
+  <header class="hero" id="top">
+    <!-- Декоративные листья (SVG, не emoji) -->
+    <svg class="hero-leaf l1" viewBox="0 0 100 100" fill="currentColor" aria-hidden="true">
+      <path d="M50 5C25 20 15 55 50 95C85 55 75 20 50 5Z"/>
+      <path d="M50 15V90" stroke="#fff" stroke-width="1.5" fill="none"/>
+    </svg>
+    <svg class="hero-leaf l2" viewBox="0 0 100 100" fill="currentColor" aria-hidden="true">
+      <path d="M50 5C25 20 15 55 50 95C85 55 75 20 50 5Z"/>
+      <path d="M50 15V90" stroke="#fff" stroke-width="1.5" fill="none"/>
     </svg>
 
-    <h1>Александр <span class="amp">&amp;</span> Мария</h1>
-    <div class="hero-sub">Мы женимся!</div>
-    <div class="hero-date">24 августа 2026</div>
+    <p class="ui-label">Свадебное приглашение</p>
+    <h1 class="hero-names">Александр<span class="hero-amp">&amp;</span>Мария</h1>
+    <p class="hero-sub">Мы женимся!</p>
+    <p class="hero-date">24 августа 2026</p>
 
-    <!-- Таймер обратного отсчёта -->
+    <!-- Таймер обратного отсчёта (заполняется в JS) -->
     <div class="countdown" id="countdown" aria-label="Обратный отсчёт до свадьбы">
-      <div class="cd-cell"><div class="cd-num" id="cd-days">0</div><div class="cd-label">дней</div></div>
-      <div class="cd-cell"><div class="cd-num" id="cd-hours">0</div><div class="cd-label">часов</div></div>
-      <div class="cd-cell"><div class="cd-num" id="cd-mins">0</div><div class="cd-label">минут</div></div>
-      <div class="cd-cell"><div class="cd-num" id="cd-secs">0</div><div class="cd-label">секунд</div></div>
+      <div class="cd-unit"><div class="cd-num" id="cd-days">00</div><div class="cd-word">дней</div></div>
+      <div class="cd-unit"><div class="cd-num" id="cd-hours">00</div><div class="cd-word">часов</div></div>
+      <div class="cd-unit"><div class="cd-num" id="cd-mins">00</div><div class="cd-word">минут</div></div>
+      <div class="cd-unit"><div class="cd-num" id="cd-secs">00</div><div class="cd-word">секунд</div></div>
     </div>
 
-    <button class="btn btn-primary" data-open-rsvp>Подтвердить присутствие</button>
+    <a href="#rsvp" class="btn btn-primary">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+      Подтвердить присутствие
+    </a>
 
-    <div class="scroll-hint">⌄</div>
+    <div class="scroll-hint" aria-hidden="true">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+    </div>
   </header>
 
-  <!-- ============================================================
-       2. ТЕКСТ ПРИГЛАШЕНИЯ
-       ============================================================ -->
+  <!-- ===================== 2. ТЕКСТ ПРИГЛАШЕНИЯ ===================== -->
   <section>
     <div class="wrap reveal">
-      <div class="card invite-card">
-        <div class="divider">❧</div>
-        <p class="lead">Дорогие родные и друзья!</p>
-        <p>
-          Мы будем счастливы разделить с вами один из самых важных дней
-          в нашей жизни. В этот тёплый летний день мы соединим наши сердца
-          и хотим, чтобы рядом были самые близкие люди. Будем рады видеть
-          вас на нашем празднике любви.
-        </p>
+      <div class="divider" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C9 6 6 8 6 13a6 6 0 0 0 12 0c0-5-3-7-6-11Z"/></svg>
+      </div>
+      <div class="card invite-text">
+        <p>Дорогие родные и друзья!</p>
+        <p>Мы будем счастливы разделить с вами один из самых важных дней в нашей жизни — день, когда два сердца станут одной семьёй.</p>
+        <p>Будем рады видеть вас среди самых близких людей.</p>
       </div>
     </div>
   </section>
 
-  <!-- ============================================================
-       3. ПРОГРАММА ДНЯ
-       ============================================================ -->
-  <section>
+  <!-- ===================== 3. ПРОГРАММА ДНЯ ===================== -->
+  <section id="program">
     <div class="wrap reveal">
-      <div class="section-tag">расписание</div>
+      <p class="eyebrow ui-label">Расписание</p>
       <h2 class="section-title">Программа дня</h2>
+      <div class="divider" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg></div>
       <div class="card">
-        <div class="timeline">
-          <div class="tl-item"><div class="tl-time">15:00</div><div class="tl-text">Сбор гостей</div></div>
-          <div class="tl-item"><div class="tl-time">16:00</div><div class="tl-text">Церемония</div></div>
-          <div class="tl-item"><div class="tl-time">17:00</div><div class="tl-text">Фотосессия</div></div>
-          <div class="tl-item"><div class="tl-time">18:00</div><div class="tl-text">Банкет</div></div>
-          <div class="tl-item"><div class="tl-time">22:00</div><div class="tl-text">Свадебный торт</div></div>
-        </div>
+        <ul class="timeline">
+          <li class="tl-item"><span class="tl-time">15:00</span><span class="tl-dot" aria-hidden="true"></span><span class="tl-label">Сбор гостей</span></li>
+          <li class="tl-item"><span class="tl-time">16:00</span><span class="tl-dot" aria-hidden="true"></span><span class="tl-label">Церемония</span></li>
+          <li class="tl-item"><span class="tl-time">17:00</span><span class="tl-dot" aria-hidden="true"></span><span class="tl-label">Фотосессия</span></li>
+          <li class="tl-item"><span class="tl-time">18:00</span><span class="tl-dot" aria-hidden="true"></span><span class="tl-label">Банкет</span></li>
+          <li class="tl-item"><span class="tl-time">22:00</span><span class="tl-dot" aria-hidden="true"></span><span class="tl-label">Свадебный торт</span></li>
+        </ul>
       </div>
     </div>
   </section>
 
-  <!-- ============================================================
-       4. МЕНЮ
-       ============================================================ -->
-  <section>
+  <!-- ===================== 4. МЕНЮ ===================== -->
+  <section id="menu">
     <div class="wrap reveal">
-      <div class="section-tag">угощения</div>
+      <p class="eyebrow ui-label">Угощения</p>
       <h2 class="section-title">Меню</h2>
+      <div class="divider" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg></div>
       <div class="menu-grid">
         <div class="menu-item">
-          <span class="menu-ico">🥗</span>
-          <div><h3>Холодные закуски</h3><p>Сезонные овощи, сыры, лёгкие канапе</p></div>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 2v20M11 2v7a2 2 0 0 1-4 0M17 2c-1.5 1-2 3-2 6 0 2 1 3 2 3v11"/></svg>
+          <h3>Холодные закуски</h3>
+          <p>Свежие сезонные блюда и лёгкие канапе</p>
         </div>
         <div class="menu-item">
-          <span class="menu-ico">🍽️</span>
-          <div><h3>Горячие блюда</h3><p>Запечённое мясо, рыба и вегетарианские варианты</p></div>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 14h16M5 14a7 7 0 0 1 14 0M12 4v3M3 18h18"/></svg>
+          <h3>Горячие блюда</h3>
+          <p>Мясо, рыба и вегетарианские варианты</p>
         </div>
         <div class="menu-item">
-          <span class="menu-ico">🍰</span>
-          <div><h3>Десерты</h3><p>Свадебный торт, пирожные и свежие ягоды</p></div>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 18h16l-2-7H6l-2 7ZM12 11V7M9 7h6"/></svg>
+          <h3>Десерты</h3>
+          <p>Свадебный торт и нежные сладости</p>
         </div>
         <div class="menu-item">
-          <span class="menu-ico">🥂</span>
-          <div><h3>Напитки</h3><p>Игристое, вино, лимонады и горячие напитки</p></div>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 3h12l-1 6a5 5 0 0 1-10 0L6 3ZM12 14v6M8 21h8"/></svg>
+          <h3>Напитки</h3>
+          <p>Игристое, вино и безалкогольные коктейли</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============================================================
-       5. ПОДАРКИ
-       ============================================================ -->
-  <section>
+  <!-- ===================== 5. ПОДАРКИ ===================== -->
+  <section id="gifts">
     <div class="wrap reveal">
       <div class="card soft-card">
-        <div class="ico-round">🎁</div>
-        <h2 class="section-title" style="margin-bottom:14px;">Подарки</h2>
-        <p>
-          Ваше присутствие — лучший подарок для нас. Если вы хотите сделать
-          нам приятное, будем благодарны за вклад в нашу семейную мечту.
-        </p>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M20 12v9H4v-9M2 7h20v5H2zM12 22V7M12 7S11 2 7.5 2 4 7 12 7ZM12 7s1-5 4.5-5S20 7 12 7Z"/></svg>
+        <p>Ваше присутствие — лучший подарок для нас. Если вы хотите сделать нам приятное, будем благодарны за вклад в нашу семейную мечту.</p>
       </div>
     </div>
   </section>
 
-  <!-- ============================================================
-       6. ПРИМЕЧАНИЯ ДЛЯ ГОСТЕЙ
-       ============================================================ -->
-  <section>
+  <!-- ===================== 6. ПРИМЕЧАНИЯ ===================== -->
+  <section id="notes">
     <div class="wrap reveal">
-      <div class="section-tag">детали</div>
-      <h2 class="section-title">Гостям на заметку</h2>
-      <ul class="notes-list">
-        <li class="note-row">
-          <span class="dot">✿</span>
-          <span><b>Дресс-код:</b> светлые и пастельные оттенки, чтобы фотографии получились нежными.</span>
-        </li>
-        <li class="note-row">
-          <span class="dot">✿</span>
-          <span><b>Подтверждение:</b> пожалуйста, сообщите о своём присутствии до <b>1 августа</b>.</span>
-        </li>
-      </ul>
-      <div class="important">Важно: церемония начнётся вовремя — приезжайте чуть заранее ♡</div>
+      <p class="eyebrow ui-label">Важно</p>
+      <h2 class="section-title">Примечания для гостей</h2>
+      <div class="divider" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg></div>
+      <div class="card">
+        <ul class="notes-list">
+          <li>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 7l4-4 3 3 4-4 4 4-3 3M3 7l6 14 6-14"/></svg>
+            <span><b>Дресс-код:</b> светлые и пастельные оттенки</span>
+          </li>
+          <li>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            <span>Просьба подтвердить присутствие <b>до 1 августа</b></span>
+          </li>
+          <li>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+            <span>Если планы изменятся — пожалуйста, сообщите нам заранее</span>
+          </li>
+        </ul>
+      </div>
     </div>
   </section>
 
-  <!-- ============================================================
-       7. ПОДТВЕРЖДЕНИЕ ПРИСУТСТВИЯ (RSVP)
-       ============================================================ -->
-  <section>
+  <!-- ===================== 7. RSVP / КАЛЕНДАРЬ ===================== -->
+  <section id="rsvp">
     <div class="wrap reveal">
+      <p class="eyebrow ui-label">Будете с нами?</p>
+      <h2 class="section-title">Подтверждение присутствия</h2>
+      <div class="divider" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg></div>
       <div class="card rsvp-card">
-        <div class="section-tag">ждём вас</div>
-        <div class="date-badge">
-          <span class="d-day">24</span>
-          <span class="d-mon">августа 2026</span>
+        <div class="cal-chip" aria-hidden="true">
+          <span class="cal-month">Август</span>
+          <span class="cal-day">24</span>
+          <span class="cal-year">2026</span>
         </div>
-        <h2 class="section-title" style="margin-bottom:20px;">Будете с нами?</h2>
         <div class="btn-row">
-          <button class="btn btn-outline btn-block" id="addCalendar">📅 Добавить в календарь</button>
-          <button class="btn btn-primary btn-block" data-open-rsvp>✓ Я приду</button>
+          <button class="btn btn-outline" id="addToCalendar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M12 14v4M10 16h4"/></svg>
+            Добавить в календарь
+          </button>
+          <button class="btn btn-primary" id="openRsvp">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            Я приду
+          </button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============================================================
-       8. МЕСТО ПРОВЕДЕНИЯ
-       ============================================================ -->
-  <section>
+  <!-- ===================== 8. МЕСТО ПРОВЕДЕНИЯ ===================== -->
+  <section id="venue">
     <div class="wrap reveal">
-      <div class="section-tag">локация</div>
+      <p class="eyebrow ui-label">Локация</p>
       <h2 class="section-title">Место проведения</h2>
+      <div class="divider" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg></div>
       <div class="card map-card">
-        <div class="map-visual"><div class="map-pin">📍</div></div>
+        <!-- Декоративная «карта» (без внешних сервисов) -->
+        <div class="map-visual">
+          <svg class="roads" viewBox="0 0 400 200" fill="none" stroke="#fff" stroke-width="6" aria-hidden="true">
+            <path d="M-10 60 H410"/><path d="M120 -10 V210" stroke-width="10"/>
+            <path d="M-10 140 Q200 100 410 150" stroke-width="4"/><path d="M300 -10 V210" stroke-width="4"/>
+          </svg>
+          <svg class="map-pin" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C7.5 2 4 5.5 4 10c0 6 8 12 8 12s8-6 8-12c0-4.5-3.5-8-8-8Z"/><circle cx="12" cy="10" r="3" fill="#fff"/></svg>
+        </div>
         <div class="map-info">
           <h3>Загородный ресторан «Green Hall»</h3>
-          <p>г. Москва, Зелёная улица, 15</p>
-          <button class="btn btn-primary btn-block" id="routeBtn">🧭 Построить маршрут</button>
+          <p class="addr">г. Москва, Зелёная улица, 15</p>
+          <button class="btn btn-primary" id="routeBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8-8-2Z"/></svg>
+            Построить маршрут
+          </button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============================================================
-       9. ФОТО ПОСЛЕ СВАДЬБЫ
-       ============================================================ -->
-  <section>
+  <!-- ===================== 9. ФОТО ПОСЛЕ СВАДЬБЫ ===================== -->
+  <section id="photos">
     <div class="wrap reveal">
-      <div class="section-tag">воспоминания</div>
-      <h2 class="section-title">Фото с праздника</h2>
-      <div class="card photo-card">
-        <p>После свадьбы здесь появятся фотографии с праздника.<br>А пока вы можете добавить свои кадры 💚</p>
-        <!-- Скрытый input + кнопка-обёртка для демонстрационной загрузки -->
-        <input type="file" id="photoInput" accept="image/*" multiple hidden />
-        <button class="btn btn-outline" id="uploadBtn">⬆ Загрузить фото</button>
+      <p class="eyebrow ui-label">Воспоминания</p>
+      <h2 class="section-title">Фото после свадьбы</h2>
+      <div class="divider" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg></div>
+      <div class="card" style="text-align:center">
+        <p class="gallery-empty">После свадьбы здесь появятся фотографии с праздника</p>
+        <button class="btn btn-outline" id="uploadBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 16V4M8 8l4-4 4 4M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+          Загрузить фото
+        </button>
+        <!-- Демо-загрузка: превью прямо на странице, без сервера -->
+        <input type="file" id="photoInput" accept="image/*" multiple aria-label="Выбор фотографий" />
         <div class="gallery" id="gallery"></div>
       </div>
     </div>
   </section>
 
-  <!-- ============================================================
-       10. ФИНАЛЬНЫЙ БЛОК
-       ============================================================ -->
+  <!-- ===================== 10. ФИНАЛ ===================== -->
   <footer class="final reveal">
-    <div class="divider">❧</div>
     <p class="with-love">С любовью,</p>
     <div class="sign">Александр и Мария</div>
-    <div class="heart">♡</div>
+    <div class="divider" style="margin-top:18px" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C9 6 6 8 6 13a6 6 0 0 0 12 0c0-5-3-7-6-11Z"/></svg>
+    </div>
   </footer>
 
-  <!-- ============================================================
-       МОДАЛЬНОЕ ОКНО RSVP
-       ============================================================ -->
-  <div class="modal-overlay" id="rsvpModal">
+  <!-- ===================== ПЛАВАЮЩАЯ МУЗЫКА ===================== -->
+  <span class="music-status" id="musicStatus" role="status" aria-live="polite"></span>
+  <button class="music-btn" id="musicBtn" aria-pressed="false" aria-label="Включить фоновую музыку">
+    <span class="ring" aria-hidden="true"></span>
+    <svg id="musicIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+  </button>
+
+  <!-- ===================== МОДАЛЬНОЕ ОКНО RSVP ===================== -->
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal">
-      <div class="modal-inner">
-        <button class="modal-close" id="modalClose" aria-label="Закрыть">×</button>
-
-        <!-- Форма -->
-        <form id="rsvpForm">
-          <h3>Подтверждение</h3>
-          <p class="modal-sub">Заполните, пожалуйста, короткую форму</p>
-
-          <div class="field">
-            <label for="f-name">ФИО</label>
-            <input type="text" id="f-name" name="name" placeholder="Иван Иванов" required />
-          </div>
-          <div class="field">
-            <label for="f-phone">Номер телефона</label>
-            <input type="tel" id="f-phone" name="phone" placeholder="+7 (___) ___-__-__" required />
-          </div>
-          <div class="field">
-            <label for="f-guests">Количество гостей</label>
-            <input type="number" id="f-guests" name="guests" min="1" max="10" value="1" required />
-          </div>
-          <div class="field">
-            <label for="f-comment">Комментарий</label>
-            <textarea id="f-comment" name="comment" placeholder="Пожелания, аллергии, вопросы…"></textarea>
-          </div>
-
-          <button type="submit" class="btn btn-primary btn-block">Отправить</button>
-        </form>
-
-        <!-- Экран благодарности -->
-        <div class="thanks" id="thanks">
-          <div class="big">💚</div>
-          <h3>Спасибо!</h3>
-          <p>Ваш ответ сохранён.<br>Мы очень ждём встречи с вами.</p>
+      <!-- Форма -->
+      <div id="formView">
+        <div class="modal-head">
+          <h3 id="modalTitle">Я приду!</h3>
+          <button class="modal-close" id="modalClose" aria-label="Закрыть окно">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
         </div>
+        <p class="modal-desc">Заполните форму, чтобы мы знали, что вы будете с нами.</p>
+
+        <form id="rsvpForm" novalidate>
+          <div class="field" id="f-name">
+            <label for="in-name">ФИО <span class="req">*</span></label>
+            <input type="text" id="in-name" name="name" autocomplete="name" placeholder="Иванов Иван Иванович" />
+            <span class="error-msg">Пожалуйста, укажите ваше имя</span>
+          </div>
+
+          <div class="field" id="f-phone">
+            <label for="in-phone">Номер телефона <span class="req">*</span></label>
+            <input type="tel" id="in-phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="+7 (___) ___-__-__" />
+            <span class="error-msg">Укажите корректный номер телефона</span>
+          </div>
+
+          <div class="field" id="f-guests">
+            <label for="in-guests">Количество гостей <span class="req">*</span></label>
+            <select id="in-guests" name="guests">
+              <option value="1">1 гость</option>
+              <option value="2">2 гостя</option>
+              <option value="3">3 гостя</option>
+              <option value="4">4 гостя</option>
+              <option value="5">5 и более</option>
+            </select>
+            <span class="error-msg">Выберите количество гостей</span>
+          </div>
+
+          <div class="field">
+            <label for="in-comment">Комментарий</label>
+            <textarea id="in-comment" name="comment" placeholder="Пожелания, ограничения по еде и т. п."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Отправить</button>
+        </form>
+      </div>
+
+      <!-- Экран благодарности -->
+      <div class="thanks" id="thanksView">
+        <div class="check">
+          <svg viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+        <h3>Спасибо!</h3>
+        <p>Ваш ответ сохранён. Мы очень ждём встречи с вами!</p>
+        <button class="btn btn-outline" id="thanksClose">Закрыть</button>
       </div>
     </div>
   </div>
 
+  <!-- =========================================================
+       JAVASCRIPT
+       ========================================================= -->
   <script>
-    /* ============================================================
-       НАСТРОЙКИ — меняйте здесь дату и адрес
-       ============================================================ */
-    const WEDDING_DATE = new Date('2026-08-24T16:00:00'); // дата и время церемонии
-    const VENUE_ADDRESS = 'г. Москва, Зелёная улица, 15'; // адрес для маршрута
+  (function () {
+    'use strict';
 
-    /* ============================================================
-       1. ТАЙМЕР ОБРАТНОГО ОТСЧЁТА
-       ============================================================ */
-    const cd = {
-      days:  document.getElementById('cd-days'),
-      hours: document.getElementById('cd-hours'),
-      mins:  document.getElementById('cd-mins'),
-      secs:  document.getElementById('cd-secs'),
-    };
+    /* ---- Дата свадьбы (24 августа 2026, 15:00 МСК) ---- */
+    var WEDDING = new Date('2026-08-24T15:00:00+03:00');
+
+    /* =========================================================
+       1. Таймер обратного отсчёта
+       ========================================================= */
+    var elDays  = document.getElementById('cd-days');
+    var elHours = document.getElementById('cd-hours');
+    var elMins  = document.getElementById('cd-mins');
+    var elSecs  = document.getElementById('cd-secs');
+
     function pad(n) { return String(n).padStart(2, '0'); }
+
     function tick() {
-      const diff = WEDDING_DATE - new Date();
-      if (diff <= 0) {
-        // Если дата уже наступила — обнуляем таймер
-        cd.days.textContent = cd.hours.textContent = cd.mins.textContent = cd.secs.textContent = '0';
-        return;
-      }
-      const s = Math.floor(diff / 1000);
-      cd.days.textContent  = Math.floor(s / 86400);
-      cd.hours.textContent = pad(Math.floor((s % 86400) / 3600));
-      cd.mins.textContent  = pad(Math.floor((s % 3600) / 60));
-      cd.secs.textContent  = pad(s % 60);
+      var diff = WEDDING.getTime() - Date.now();
+      if (diff < 0) diff = 0;                       // после даты — нули
+      var s = Math.floor(diff / 1000);
+      elDays.textContent  = pad(Math.floor(s / 86400));
+      elHours.textContent = pad(Math.floor((s % 86400) / 3600));
+      elMins.textContent  = pad(Math.floor((s % 3600) / 60));
+      elSecs.textContent  = pad(s % 60);
     }
     tick();
     setInterval(tick, 1000);
 
-    /* ============================================================
-       2. АНИМАЦИЯ ПОЯВЛЕНИЯ БЛОКОВ (Intersection Observer)
-       ============================================================ */
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          io.unobserve(e.target); // анимируем один раз
-        }
-      });
-    }, { threshold: 0.15 });
-    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+    /* =========================================================
+       2. Анимация появления блоков (IntersectionObserver)
+       ========================================================= */
+    var reveals = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            io.unobserve(e.target);                 // анимируем один раз
+          }
+        });
+      }, { threshold: 0.15 });
+      reveals.forEach(function (el) { io.observe(el); });
+    } else {
+      reveals.forEach(function (el) { el.classList.add('visible'); });
+    }
 
-    /* ============================================================
-       3. МОДАЛЬНОЕ ОКНО RSVP
-       ============================================================ */
-    const modal = document.getElementById('rsvpModal');
-    const form = document.getElementById('rsvpForm');
-    const thanks = document.getElementById('thanks');
+    /* =========================================================
+       3. Модальное окно RSVP
+       ========================================================= */
+    var overlay    = document.getElementById('modalOverlay');
+    var openBtn    = document.getElementById('openRsvp');
+    var closeBtn   = document.getElementById('modalClose');
+    var thanksClose= document.getElementById('thanksClose');
+    var form       = document.getElementById('rsvpForm');
+    var formView   = document.getElementById('formView');
+    var thanksView = document.getElementById('thanksView');
+    var lastFocus  = null;
 
     function openModal() {
-      modal.classList.add('open');
-      document.body.style.overflow = 'hidden'; // блокируем фон
+      lastFocus = document.activeElement;
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';      // блок скролла фона
+      formView.style.display = 'block';             // показываем форму
+      thanksView.classList.remove('show');
+      setTimeout(function () { document.getElementById('in-name').focus(); }, 250);
     }
     function closeModal() {
-      modal.classList.remove('open');
+      overlay.classList.remove('open');
       document.body.style.overflow = '';
+      if (lastFocus) lastFocus.focus();
     }
-    // Все кнопки с атрибутом data-open-rsvp открывают форму
-    document.querySelectorAll('[data-open-rsvp]').forEach((b) => b.addEventListener('click', openModal));
-    document.getElementById('modalClose').addEventListener('click', closeModal);
-    // Клик по затемнённому фону закрывает окно
-    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-    // Закрытие по Escape
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
-    // Отправка формы — сохраняем в localStorage (backend не нужен)
-    form.addEventListener('submit', (e) => {
+    openBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    thanksClose.addEventListener('click', closeModal);
+    // Клик по затемнённому фону закрывает окно
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
+    // Esc закрывает окно
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+    });
+
+    /* ---- Валидация и отправка формы ---- */
+    function setError(fieldId, hasError) {
+      document.getElementById(fieldId).classList.toggle('invalid', hasError);
+    }
+
+    form.addEventListener('submit', function (e) {
       e.preventDefault();
-      const data = {
-        name:    document.getElementById('f-name').value,
-        phone:   document.getElementById('f-phone').value,
-        guests:  document.getElementById('f-guests').value,
-        comment: document.getElementById('f-comment').value,
-        date:    new Date().toISOString(),
-      };
-      // Читаем существующие ответы, добавляем новый и сохраняем
-      const all = JSON.parse(localStorage.getItem('rsvp_responses') || '[]');
-      all.push(data);
-      localStorage.setItem('rsvp_responses', JSON.stringify(all));
+
+      var name    = document.getElementById('in-name').value.trim();
+      var phone   = document.getElementById('in-phone').value.trim();
+      var guests  = document.getElementById('in-guests').value;
+      var comment = document.getElementById('in-comment').value.trim();
+
+      // Простая проверка: имя не пустое, телефон — минимум 6 цифр
+      var nameOk  = name.length > 1;
+      var phoneOk = (phone.match(/\d/g) || []).length >= 6;
+
+      setError('f-name', !nameOk);
+      setError('f-phone', !phoneOk);
+
+      if (!nameOk)  { document.getElementById('in-name').focus();  return; }
+      if (!phoneOk) { document.getElementById('in-phone').focus(); return; }
+
+      // Сохраняем ответ в localStorage (backend не нужен)
+      var record = { name: name, phone: phone, guests: guests, comment: comment, date: new Date().toISOString() };
+      try {
+        var listRaw = localStorage.getItem('rsvp_list');
+        var list = listRaw ? JSON.parse(listRaw) : [];
+        list.push(record);
+        localStorage.setItem('rsvp_list', JSON.stringify(list));
+      } catch (err) { /* приватный режим — просто игнорируем */ }
 
       // Показываем экран благодарности
-      form.style.display = 'none';
-      thanks.classList.add('show');
-
-      // Через 2.5 сек закрываем окно и возвращаем форму в исходное состояние
-      setTimeout(() => {
-        closeModal();
-        setTimeout(() => {
-          form.reset();
-          form.style.display = 'block';
-          thanks.classList.remove('show');
-        }, 400);
-      }, 2500);
+      formView.style.display = 'none';
+      thanksView.classList.add('show');
+      form.reset();
     });
 
-    /* ============================================================
-       4. ДОБАВИТЬ В КАЛЕНДАРЬ (генерация .ics файла)
-       ============================================================ */
-    document.getElementById('addCalendar').addEventListener('click', () => {
-      const start = '20260824T160000';
-      const end   = '20260824T230000';
-      const ics = [
-        'BEGIN:VCALENDAR', 'VERSION:2.0', 'BEGIN:VEVENT',
+    /* =========================================================
+       4. Добавить в календарь (генерация .ics)
+       ========================================================= */
+    document.getElementById('addToCalendar').addEventListener('click', function () {
+      function fmt(d) { return d.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z'; }
+      var end = new Date(WEDDING.getTime() + 7 * 3600 * 1000); // праздник ~7 часов
+      var ics = [
+        'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Wedding//RU',
+        'BEGIN:VEVENT',
+        'UID:' + Date.now() + '@wedding',
+        'DTSTAMP:' + fmt(new Date()),
+        'DTSTART:' + fmt(WEDDING),
+        'DTEND:' + fmt(end),
         'SUMMARY:Свадьба Александра и Марии',
-        'DTSTART:' + start, 'DTEND:' + end,
-        'LOCATION:' + VENUE_ADDRESS,
-        'DESCRIPTION:Будем рады видеть вас на нашем празднике!',
-        'END:VEVENT', 'END:VCALENDAR',
+        'LOCATION:г. Москва, Зелёная улица, 15, ресторан Green Hall',
+        'DESCRIPTION:Будем рады видеть вас на нашей свадьбе!',
+        'END:VEVENT', 'END:VCALENDAR'
       ].join('\r\n');
 
-      const blob = new Blob([ics], { type: 'text/calendar' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'wedding.ics';
-      link.click();
-      URL.revokeObjectURL(link.href);
+      var blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'wedding-2026-08-24.ics';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     });
 
-    /* ============================================================
-       5. ПОСТРОИТЬ МАРШРУТ (открываем Яндекс.Карты по адресу)
-       ============================================================ */
-    document.getElementById('routeBtn').addEventListener('click', () => {
-      const q = encodeURIComponent(VENUE_ADDRESS);
-      // Открываем Яндекс.Карты; при желании можно заменить на Google:
-      // 'https://www.google.com/maps/search/?api=1&query=' + q
-      window.open('https://yandex.ru/maps/?text=' + q, '_blank');
+    /* =========================================================
+       5. Построить маршрут (Яндекс.Карты по адресу)
+       ========================================================= */
+    document.getElementById('routeBtn').addEventListener('click', function () {
+      var address = 'г. Москва, Зелёная улица, 15';
+      // Яндекс.Карты по адресу (легко заменить на Google Maps — см. инструкцию)
+      var url = 'https://yandex.ru/maps/?text=' + encodeURIComponent(address);
+      window.open(url, '_blank', 'noopener');
     });
 
-    /* ============================================================
-       6. ДЕМО-ЗАГРУЗКА ФОТО (превью без сервера)
-       ============================================================ */
-    const photoInput = document.getElementById('photoInput');
-    const gallery = document.getElementById('gallery');
-    document.getElementById('uploadBtn').addEventListener('click', () => photoInput.click());
-    photoInput.addEventListener('change', () => {
-      [...photoInput.files].forEach((file) => {
-        if (!file.type.startsWith('image/')) return;
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-          const img = document.createElement('img');
+    /* =========================================================
+       6. Демо-загрузка фотографий (превью без сервера)
+       ========================================================= */
+    var uploadBtn  = document.getElementById('uploadBtn');
+    var photoInput = document.getElementById('photoInput');
+    var gallery    = document.getElementById('gallery');
+
+    uploadBtn.addEventListener('click', function () { photoInput.click(); });
+
+    photoInput.addEventListener('change', function () {
+      Array.prototype.forEach.call(photoInput.files, function (file) {
+        if (!file.type.indexOf || file.type.indexOf('image/') !== 0) return;
+        var reader = new FileReader();
+        reader.onload = function (ev) {
+          var img = document.createElement('img');
           img.src = ev.target.result;
+          img.alt = 'Фотография с праздника';
           gallery.appendChild(img);
         };
         reader.readAsDataURL(file);
       });
-      photoInput.value = ''; // позволяем выбрать те же файлы повторно
+      photoInput.value = ''; // сброс — можно выбрать те же файлы снова
     });
 
-    /* ============================================================
-       7. КНОПКА МУЗЫКИ (имитация состояния, без аудиофайла)
-       ============================================================ */
-    const musicBtn = document.getElementById('musicBtn');
-    const musicToast = document.getElementById('musicToast');
-    let musicOn = false;
-    let toastTimer;
-    musicBtn.addEventListener('click', () => {
-      musicOn = !musicOn;
-      musicBtn.classList.toggle('playing', musicOn);
-      musicToast.textContent = musicOn ? '🎵 Музыка включена' : '🔇 Музыка выключена';
-      musicToast.classList.add('show');
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => musicToast.classList.remove('show'), 1800);
+    /* =========================================================
+       7. Кнопка фоновой музыки (имитация состояния)
+       ========================================================= */
+    var musicBtn    = document.getElementById('musicBtn');
+    var musicStatus = document.getElementById('musicStatus');
+    var playing     = false;
+    var statusTimer = null;
 
-      /* Если позже захотите реальный звук — раскомментируйте и добавьте файл:
-      if (!window._audio) { window._audio = new Audio('music.mp3'); window._audio.loop = true; }
-      musicOn ? window._audio.play() : window._audio.pause();
-      */
+    function showStatus(text) {
+      musicStatus.textContent = text;
+      musicStatus.classList.add('show');
+      clearTimeout(statusTimer);
+      statusTimer = setTimeout(function () { musicStatus.classList.remove('show'); }, 2200);
+    }
+
+    musicBtn.addEventListener('click', function () {
+      playing = !playing;
+      musicBtn.classList.toggle('playing', playing);
+      musicBtn.setAttribute('aria-pressed', String(playing));
+      musicBtn.setAttribute('aria-label', playing ? 'Выключить фоновую музыку' : 'Включить фоновую музыку');
+      showStatus(playing ? 'Музыка включена' : 'Музыка выключена');
+      /* Подключение реального аудиофайла:
+         var audio = new Audio('song.mp3'); playing ? audio.play() : audio.pause(); */
     });
+
+  })();
   </script>
 </body>
 </html>
